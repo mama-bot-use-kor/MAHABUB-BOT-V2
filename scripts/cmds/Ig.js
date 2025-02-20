@@ -4,7 +4,7 @@ const fs = require("fs-extra");
 
 module.exports = {
     config: {
-        name: `${global.config.PREFIX}`,
+        name: "test",
         version: "1.0",
         author: "MR᭄﹅ MAHABUB﹅ メꪜ",
         countDown: 5,
