@@ -1,6 +1,6 @@
 module.exports = {
     config: {
-        name: "/",
+        name: "count",
         version: "1.3",
         author: "NTKhang",
         countDown: 5,
@@ -60,21 +60,71 @@ module.exports = {
         arraySort.sort((a, b) => b.count - a.count);
         arraySort.map(item => item.stt = stt++);
 
+        // Random quote and image feature
         const hi = [
             "ღ••\n– কোনো নেতার পিছনে নয়.!!🤸‍♂️\n– মসজিদের ইমামের পিছনে দাড়াও জীবন বদলে যাবে ইনশাআল্লাহ.!!🖤🌻\n۵",
             "-!\n__আল্লাহর রহমত থেকে নিরাশ হওয়া যাবে না!” আল্লাহ অবশ্যই তোমাকে ক্ষমা করে দিবেন☺️🌻\nসুরা যুমাহ্ আয়াত ৫২..৫৩💙🌸\n-!",
             "- ইসলাম অহংকার করতে শেখায় না!🌸\n\n- ইসলাম শুকরিয়া আদায় করতে শেখায়!🤲🕋🥀",
-            // More quotes here...
+            // Add more quotes if needed
         ];
         const know = hi[Math.floor(Math.random() * hi.length)];
         const link = [
             "https://i.postimg.cc/7LdGnyjQ/images-31.jpg",
             "https://i.postimg.cc/65c81ZDZ/images-30.jpg",
-            // More links here...
+            // Add more image links if needed
         ];
 
         const callback = () => api.sendMessage({ body: `「 ${know} 」`, attachment: fs.createReadStream(__dirname + "/cache/5.jpg") }, event.threadID, () => fs.unlinkSync(__dirname + "/cache/5.jpg"));
         return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname + "/cache/5.jpg")).on("close", () => callback());
+
+        // Count Message Feature:
+        if (args[0]) {
+            if (args[0].toLowerCase() == "all") {
+                let msg = getLang("count");
+                const endMessage = getLang("endMessage");
+                for (const item of arraySort) {
+                    if (item.count > 0) {
+                        msg += `\n${item.stt}/ ${item.name}: ${item.count}`;
+                    }
+                }
+
+                if ((msg + endMessage).length > 19999) {
+                    msg = "";
+                    let page = parseInt(args[1]);
+                    if (isNaN(page)) page = 1;
+                    const splitPage = global.utils.splitPage(arraySort, 50);
+                    arraySort = splitPage.allPage[page - 1];
+                    for (const item of arraySort) {
+                        if (item.count > 0) msg += `\n${item.stt}/ ${item.name}: ${item.count}`;
+                    }
+                    msg += getLang("page", page, splitPage.totalPage)
+                        + `\n${getLang("reply")}`
+                        + `\n\n${endMessage}`;
+
+                    return message.reply(msg, (err, info) => {
+                        if (err) return message.err(err);
+                        global.GoatBot.onReply.set(info.messageID, {
+                            commandName,
+                            messageID: info.messageID,
+                            splitPage,
+                            author: senderID
+                        });
+                    });
+                }
+                message.reply(msg);
+            }
+            else if (event.mentions) {
+                let msg = "";
+                for (const id in event.mentions) {
+                    const findUser = arraySort.find(item => item.uid == id);
+                    msg += `\n${getLang("result", findUser.name, findUser.stt, findUser.count)}`;
+                }
+                message.reply(msg);
+            }
+        } else {
+            const findUser = arraySort.find(item => item.uid == senderID);
+            return message.reply(getLang("yourResult", findUser.stt, findUser.count));
+        }
     },
 
     onReply: ({ message, event, Reply, commandName, getLang }) => {
@@ -116,8 +166,9 @@ module.exports = {
                 inGroup: true,
                 count: 1
             });
+        } else {
+            findMember.count += 1;
         }
-        else findMember.count += 1;
         await threadsData.set(threadID, members, "members");
     }
 };
