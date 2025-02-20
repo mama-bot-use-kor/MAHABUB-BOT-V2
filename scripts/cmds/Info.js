@@ -1,10 +1,10 @@
 module.exports = {
-    name: "info",
+    name: "admin", // Command name (should match how you call it in the bot)
     version: "1.0.0",
     permission: 0,
     credits: "nayan",
     description: "Admin details and image",
-    prefix: true,
+    prefix: true, // You can set this to true if you want it to be triggered with a prefix
     cooldowns: 5,
     dependencies: {
         "axios": "",
@@ -38,10 +38,10 @@ module.exports = {
 𝐑𝐞𝐥𝐚𝐭𝐢𝐨𝐧𝐬𝐡𝐢𝐩 : 𝐒𝐢𝐧𝐠𝐥𝐞
 𝐖𝐨𝐫𝐤        : 𝐒𝐭𝐮𝐝𝐞𝐧𝐭
 𝐆𝐦𝐚𝐢𝐥       : mahaburpk479@gmail.com
-𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩: wa.me/+8801613356376
+𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩: wa.me/+8801312737981
 𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦  : t.me/.....
-𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 : MR᭄﹅ MAHABUB﹅ メꪜ
-𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐋𝐢𝐧𝐤 : https://www.facebook.com/www.xnxx.com.140`,
+𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 : ミ𝐌　𝐀　𝐇　𝐀　𝐁　𝐔　 𝐁ミ
+𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐋𝐢𝐧𝐤 : https://www.facebook.com/www.xnxx.com140`,
                 attachment: fs.createReadStream(__GLOBAL.cache + "/1.png")
             }, event.threadID, () => fs.unlinkSync(__GLOBAL.cache + "/1.png"));
         };
