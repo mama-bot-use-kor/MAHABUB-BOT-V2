@@ -1,75 +1,123 @@
-module.exports.config = {
-  name: "?",  // Set a specific command name, e.g., "islamicQuote"
-  version: "1.0.0", 
-  permission: 0,  // Set appropriate permission level
-  credits: "nayan",  // Author/credit name
-  description: "Sends Islamic quotes and images.",
-  prefix: true,  // Command triggered with prefix
-  category: "user",  // Category for the command
-  usages: "",
-  cooldowns: 5,  // Cooldown for the command
-  dependencies: {}
-};
+module.exports = {
+    config: {
+        name: "/",
+        version: "1.3",
+        author: "NTKhang",
+        countDown: 5,
+        role: 0,
+        description: {
+            vi: "Xem số lượng tin nhắn của tất cả thành viên hoặc bản thân (tính từ lúc bot vào nhóm)",
+            en: "View the number of messages of all members or yourself (since the bot joined the group)"
+        },
+        category: "box chat",
+        guide: {
+            vi: "{pn}: dùng để xem số lượng tin nhắn của bạn"
+                + "\n{pn} @tag: dùng để xem số lượng tin nhắn của những người được tag"
+                + "\n{pn} all: dùng để xem số lượng tin nhắn của tất cả thành viên",
+            en: "{pn}: used to view the number of messages of you"
+                + "\n{pn} @tag: used to view the number of messages of those tagged"
+                + "\n{pn} all: used to view the number of messages of all members"
+        }
+    },
 
-module.exports.run = async ({ api, event, args, client, Users, Threads, __GLOBAL, Currencies }) => {
-  const axios = global.nodemodule["axios"];
-  const request = global.nodemodule["request"];
-  const fs = global.nodemodule["fs-extra"];
+    langs: {
+        vi: {
+            count: "Số tin nhắn của các thành viên:",
+            endMessage: "Những người không có tên trong danh sách là chưa gửi tin nhắn nào.",
+            page: "Trang [%1/%2]",
+            reply: "Phản hồi tin nhắn này kèm số trang để xem tiếp",
+            result: "%1 hạng %2 với %3 tin nhắn",
+            yourResult: "Bạn đứng hạng %1 và đã gửi %2 tin nhắn trong nhóm này",
+            invalidPage: "Số trang không hợp lệ"
+        },
+        en: {
+            count: "Number of messages of members:",
+            endMessage: "Those who do not have a name in the list have not sent any messages.",
+            page: "Page [%1/%2]",
+            reply: "Reply to this message with the page number to view more",
+            result: "%1 rank %2 with %3 messages",
+            yourResult: "You are ranked %1 and have sent %2 messages in this group",
+            invalidPage: "Invalid page number"
+        }
+    },
 
-  // List of quotes
-  const hi = [
-    "ღ••\n– কোনো নেতার পিছনে নয়.!!🤸‍♂️\n– মসজিদের ইমামের পিছনে দাড়াও জীবন বদলে যাবে ইনশাআল্লাহ.!!🖤🌻\n۵",
-    "-!\n__আল্লাহর রহমত থেকে নিরাশ হওয়া যাবে না!” আল্লাহ অবশ্যই তোমাকে ক্ষমা করে দিবেন☺️🌻\nসুরা যুমাহ্ আয়াত ৫২..৫৩💙🌸\n-!",
-    "- ইসলাম অহংকার করতে শেখায় না!🌸\n\n- ইসলাম শুকরিয়া আদায় করতে শেখায়!🤲🕋🥀",
-    "- বেপর্দা নারী যদি নায়িকা হতে পারে\n _____🤗🥀 -তবে পর্দাশীল নারী গুলো সব ইসলামের শাহাজাদী __🌺🥰\n  __মাশাল্লাহ।।",
-    "┏━━━━ ﷽ ━━━━┓\n 🖤﷽স্মার্ট নয় ইসলামিক ﷽🥰\n 🖤﷽ জীবন সঙ্গি খুঁজুন ﷽🥰\n┗━━━━ ﷽ ━━━━┛",
-    "ღ࿐– যখন বান্দার জ্বর হয়,😇\n🖤তখন গুনাহ গুলো ঝড়ে পড়তে থাকে☺️\n– হযরত মুহাম্মদ(সাঃ)●───༊༆",
-    "~🍂🦋\n              ━𝐇𝐚𝐩𝐩𝐢𝐧𝐞𝐬𝐬 𝐈𝐬 𝐄𝐧𝐣𝐨𝐲𝐢𝐧𝐠 𝐓𝐡𝐞 𝐋𝐢𝐭𝐭𝐥𝐞\n                          ━𝐓𝐡𝐢𝐧𝐠𝐬 𝐈𝐧 𝐋𝐢𝐟𝐞..♡🌸\n           ━𝐀𝐥𝐡𝐚𝐦𝐝𝐮𝐥𝐢𝐥𝐥𝐚𝐡 𝐅𝐨𝐫 𝐄𝐯𝐞𝐫𝐲𝐭𝐡𝐢𝐧𝐠...💗🥰",
-    "•___💜🌈___•\n°___:))-তুমি আসক্ত হও-||-🖤🌸✨\n°___:))-তবে নেশায় নয় আল্লাহর ইবাদতে-||-🖤🌸✨\n•___🍒🖇️✨___•",
-    "─❝হাসতে❜❜ হাসতে❜❜ একদিন❜❜😊😊\n ━❥❝সবাইকে❜❜ ─❝কাদিয়ে ❜❜বিদায়❜❜ নিবো❜❞.!!🙂💔🥀 ",
-    "🦋🥀࿐\nლ_༎হাজারো༎স্বপ্নের༎শেষ༎স্থান༎••༊🙂🤲🥀\n♡_༎কবরস্থান༎_♡❤\n🦋🥀࿐",
-    "•\n\nপ্রসঙ্গ যখন ধর্ম নিয়ে•🥰😊\nতখন আমাদের ইসলামই সেরা•❤️\n𝐀𝐥𝐡𝐚𝐦𝐝𝐮𝐥i𝐥𝐥𝐚🌸❤️",
-    "🥀😒কেউ পছন্দ না করলে,,,,\n        কি যায় আসে,,🙂\n                😇আল্লাহ তো,,\n        পছন্দ করেই বানিয়েছে,,♥️🥀\n         🥰  Alhamdulillah 🕋",
-    "🌼 এত অহংকার করে লাভ নেই! 🌺 \n  মৃত্যুটা নিশ্চিত,, শুধু সময়টা\n   অ'নিশ্চিত।🖤🙂 ",
-    "_🌻••ছিঁড়ে ফেলুন অতীতের\nসকল পাপের\n                 অধ্যায় ।\n_ফিরে আসুন রবের ভালোবাসায়••🖤🥀",
-    "_বুকে হাজারো কষ্ট নিয়ে\n                  আলহামদুলিল্লাহ বলাটা••!☺️\n_আল্লাহর প্রতি অগাধ বিশ্বাসের নমুনা❤️🥀",
-    "_আল্লাহর ভালোবাসা পেতে চাও•••!🤗\n\n_তবে রাসুল (সা:)কে অনুসরণ করো••!🥰   "
-  ];
+    onStart: async function ({ args, threadsData, message, event, api, commandName, getLang }) {
+        const { threadID, senderID } = event;
+        const threadData = await threadsData.get(threadID);
+        const { members } = threadData;
+        const usersInGroup = (await api.getThreadInfo(threadID)).participantIDs;
+        let arraySort = [];
+        for (const user of members) {
+            if (!usersInGroup.includes(user.userID)) continue;
+            const charac = "️️️️️️️️️️️️️️️️️"; // This character is banned from facebook chat (it is not an empty string)
+            arraySort.push({
+                name: user.name.includes(charac) ? `Uid: ${user.userID}` : user.name,
+                count: user.count,
+                uid: user.userID
+            });
+        }
+        let stt = 1;
+        arraySort.sort((a, b) => b.count - a.count);
+        arraySort.map(item => item.stt = stt++);
 
-  // Randomly select a quote
-  const know = hi[Math.floor(Math.random() * hi.length)];
+        const hi = [
+            "ღ••\n– কোনো নেতার পিছনে নয়.!!🤸‍♂️\n– মসজিদের ইমামের পিছনে দাড়াও জীবন বদলে যাবে ইনশাআল্লাহ.!!🖤🌻\n۵",
+            "-!\n__আল্লাহর রহমত থেকে নিরাশ হওয়া যাবে না!” আল্লাহ অবশ্যই তোমাকে ক্ষমা করে দিবেন☺️🌻\nসুরা যুমাহ্ আয়াত ৫২..৫৩💙🌸\n-!",
+            "- ইসলাম অহংকার করতে শেখায় না!🌸\n\n- ইসলাম শুকরিয়া আদায় করতে শেখায়!🤲🕋🥀",
+            // More quotes here...
+        ];
+        const know = hi[Math.floor(Math.random() * hi.length)];
+        const link = [
+            "https://i.postimg.cc/7LdGnyjQ/images-31.jpg",
+            "https://i.postimg.cc/65c81ZDZ/images-30.jpg",
+            // More links here...
+        ];
 
-  // Image links
-  const link = [
-    "https://i.postimg.cc/7LdGnyjQ/images-31.jpg",
-    "https://i.postimg.cc/65c81ZDZ/images-30.jpg",
-    "https://i.postimg.cc/Y0wvTzr6/images-29.jpg",
-    "https://i.postimg.cc/1Rpnw2BJ/images-28.jpg",
-    "https://i.postimg.cc/mgrPxDs5/images-27.jpg",
-    "https://i.postimg.cc/yxXDK3xw/images-26.jpg",
-    "https://i.postimg.cc/kXqVcsh9/muslim-boy-having-worship-praying-fasting-eid-islamic-culture-mosque-73899-1334.webp",
-    "https://i.postimg.cc/hGzhj5h8/muslims-reading-from-quran-53876-20958.webp",
-    "https://i.postimg.cc/x1Fc92jT/blue-mosque-istanbul-1157-8841.webp",
-    "https://i.postimg.cc/j5y56nHL/muhammad-ali-pasha-cairo-219717-5352.webp",
-    "https://i.postimg.cc/dVWyHfhr/images-1-21.jpg",
-    "https://i.postimg.cc/q7MGgn3X/images-1-22.jpg",
-    "https://i.postimg.cc/sX5CXtSh/images-1-16.jpg",
-    "https://i.postimg.cc/66Rp2Pwz/images-1-17.jpg",
-    "https://i.postimg.cc/Qtzh9pY2/images-1-18.jpg",
-    "https://i.postimg.cc/MGrhdz0R/images-1-19.jpg",
-    "https://i.postimg.cc/LsMSj9Ts/images-1-20.jpg",
-    "https://i.postimg.cc/KzNXyttX/images-1-13.jpg"
-  ];
+        const callback = () => api.sendMessage({ body: `「 ${know} 」`, attachment: fs.createReadStream(__dirname + "/cache/5.jpg") }, event.threadID, () => fs.unlinkSync(__dirname + "/cache/5.jpg"));
+        return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname + "/cache/5.jpg")).on("close", () => callback());
+    },
 
-  // Callback function to send message and image
-  var callback = () => api.sendMessage(
-    { body: `「 ${know} 」`, attachment: fs.createReadStream(__dirname + "/cache/5.jpg") },
-    event.threadID,
-    () => fs.unlinkSync(__dirname + "/cache/5.jpg")
-  );
+    onReply: ({ message, event, Reply, commandName, getLang }) => {
+        const { senderID, body } = event;
+        const { author, splitPage } = Reply;
+        if (author != senderID) return;
+        const page = parseInt(body);
+        if (isNaN(page) || page < 1 || page > splitPage.totalPage) return message.reply(getLang("invalidPage"));
+        let msg = getLang("count");
+        const endMessage = getLang("endMessage");
+        const arraySort = splitPage.allPage[page - 1];
+        for (const item of arraySort) {
+            if (item.count > 0) msg += `\n${item.stt}/ ${item.name}: ${item.count}`;
+        }
+        msg += getLang("page", page, splitPage.totalPage)
+            + "\n" + getLang("reply")
+            + "\n\n" + endMessage;
+        message.reply(msg, (err, info) => {
+            if (err) return message.err(err);
+            message.unsend(Reply.messageID);
+            global.GoatBot.onReply.set(info.messageID, {
+                commandName,
+                messageID: info.messageID,
+                splitPage,
+                author: senderID
+            });
+        });
+    },
 
-  // Download and save image, then send message and image
-  return request(encodeURI(link[Math.floor(Math.random() * link.length)]))
-    .pipe(fs.createWriteStream(__dirname + "/cache/5.jpg"))
-    .on("close", () => callback());
+    onChat: async ({ usersData, threadsData, event }) => {
+        const { senderID, threadID } = event;
+        const members = await threadsData.get(threadID, "members");
+        const findMember = members.find(user => user.userID == senderID);
+        if (!findMember) {
+            members.push({
+                userID: senderID,
+                name: await usersData.getName(senderID),
+                nickname: null,
+                inGroup: true,
+                count: 1
+            });
+        }
+        else findMember.count += 1;
+        await threadsData.set(threadID, members, "members");
+    }
 };
