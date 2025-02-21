@@ -1,131 +1,130 @@
-const fs = require('fs');
-const ytdl = require('ytdl-core');
-const axios = require('axios');
-const Youtube = require('youtube-search-api');
+const fs = require("fs");
+const ytdl = require("ytdl-core");
+const { GetListByKeyword } = require("youtube-search-api");
 
 async function downloadMusicFromYoutube(link, path) {
-  try {
-    const timestart = Date.now();
-    if (!link) throw new Error("Missing link");
-
+    var timestart = Date.now();
+    if (!link) return "Missing link";
+    
     return new Promise((resolve, reject) => {
-      ytdl(link, {
-        filter: format =>
-          format.quality == 'tiny' && format.audioBitrate == 48 && format.hasAudio === true
-      })
-        .pipe(fs.createWriteStream(path))
-        .on("close", async () => {
-          const data = await ytdl.getInfo(link);
-          resolve({
-            title: data.videoDetails.title,
-            duration: Number(data.videoDetails.lengthSeconds),
-            views: data.videoDetails.viewCount,
-            likes: data.videoDetails.likes,
-            channel: data.videoDetails.author.name,
-            timestart
-          });
-        })
-        .on("error", reject);
+        ytdl(link, { filter: format => format.quality == "tiny" && format.audioBitrate == 48 && format.hasAudio == true })
+            .pipe(fs.createWriteStream(path))
+            .on("close", async () => {
+                var data = await ytdl.getInfo(link);
+                resolve({
+                    title: data.videoDetails.title,
+                    dur: Number(data.videoDetails.lengthSeconds),
+                    viewCount: data.videoDetails.viewCount,
+                    likes: data.videoDetails.likes,
+                    author: data.videoDetails.author.name,
+                    timestart: timestart
+                });
+            })
+            .on("error", reject);
     });
-  } catch (error) {
-    console.error(error);
-    throw new Error("Error downloading music from YouTube.");
-  }
 }
 
 module.exports = {
-  config: {
-    name: "song",
-    aliases: ["play"],
-    version: "2.0.0",
-    author: "Nayan - Modified for Goat Bot V2",
-    description: "Download and play songs from YouTube",
-    category: "media",
-    usage: "<song title/link>",
-    cooldown: 5,
-    dependencies: {
-      "ytdl-core": "",
-      "youtube-search-api": ""
-    }
-  },
+    config: {
+        name: "song",
+        aliases: ["music", "ytmp3"],
+        version: "2.0",
+        author: "Nayan (Converted by ChatGPT)",
+        role: 0,
+        shortDescription: "Download and play music from YouTube",
+        longDescription: "Search for a song or provide a YouTube link to download and play the audio.",
+        category: "media",
+        guide: "{prefix}song <song name or YouTube link>"
+    },
 
-  onReply: async function ({ api, event, Reply }) {
-    try {
-      const path = `${__dirname}/cache/song.mp3`;
-      const data = await downloadMusicFromYoutube(`https://www.youtube.com/watch?v=${Reply.link[event.body - 1]}`, path);
-
-      if (fs.statSync(path).size > 26214400) {
-        fs.unlinkSync(path);
-        return api.sendMessage("The file is too large to send (above 25MB).", event.threadID, event.messageID);
-      }
-
-      api.unsendMessage(Reply.messageID);
-      return api.sendMessage({
-        body: `🎵 Title: ${data.title}\n🎶 Channel: ${data.channel}\n⏱️ Duration: ${convertHMS(data.duration)}\n👀 Views: ${data.views}\n👍 Likes: ${data.likes}\n⏳ Processing Time: ${Math.floor((Date.now() - data.timestart) / 1000)} sec\n💿====GOAT BOT====💿`,
-        attachment: fs.createReadStream(path)
-      }, event.threadID, () => fs.unlinkSync(path), event.messageID);
-    } catch (error) {
-      console.error(error);
-      api.sendMessage("An error occurred while processing your request.", event.threadID, event.messageID);
-    }
-  },
-
-  run: async function ({ api, event, args }) {
-    try {
-      if (!args.length) return api.sendMessage('» Please provide a song name or YouTube link.', event.threadID, event.messageID);
-
-      const keywordSearch = args.join(" ");
-      const path = `${__dirname}/cache/song.mp3`;
-
-      if (fs.existsSync(path)) fs.unlinkSync(path);
-
-      if (args.join(" ").startsWith("https://")) {
-        const data = await downloadMusicFromYoutube(args.join(" "), path);
-        if (fs.statSync(path).size > 26214400) {
-          fs.unlinkSync(path);
-          return api.sendMessage('File size exceeds 25MB, cannot send.', event.threadID, event.messageID);
+    onStart: async function ({ message, args, event }) {
+        if (args.length === 0) {
+            return message.reply("❌ Please enter a song name or YouTube link.");
         }
 
-        return api.sendMessage({
-          body: `🎵 Title: ${data.title}\n🎶 Channel: ${data.channel}\n⏱️ Duration: ${convertHMS(data.duration)}\n👀 Views: ${data.views}\n👍 Likes: ${data.likes}\n⏳ Processing Time: ${Math.floor((Date.now() - data.timestart) / 1000)} sec\n💿====GOAT BOT====💿`,
-          attachment: fs.createReadStream(path)
-        }, event.threadID, () => fs.unlinkSync(path), event.messageID);
-      } else {
-        const searchResults = (await Youtube.GetListByKeyword(keywordSearch, false, 6)).items;
-        if (!searchResults.length) return api.sendMessage('No results found, please try again.', event.threadID, event.messageID);
+        const keywordSearch = args.join(" ");
+        var path = `${__dirname}/cache/song.mp3`;
 
-        let msg = "";
-        let link = [];
-        searchResults.forEach((video, index) => {
-          link.push(video.id);
-          msg += `${index + 1} - ${video.title} (${video.length.simpleText})\n\n`;
-        });
+        // Remove existing file if exists
+        if (fs.existsSync(path)) {
+            fs.unlinkSync(path);
+        }
 
-        return api.sendMessage({
-          body: `🔎 Found ${link.length} results for your search:\n\n${msg}» Reply with a number to choose a song.`
-        }, event.threadID, (error, info) => {
-          global.GoatBot.onReply.set(info.messageID, {
-            name: this.config.name,
-            messageID: info.messageID,
-            author: event.senderID,
-            link
-          });
-        }, event.messageID);
-      }
-    } catch (error) {
-      console.error(error);
-      return api.sendMessage('An error occurred. Please try again.', event.threadID, event.messageID);
+        if (args[0].startsWith("https://")) {
+            // Download directly from YouTube link
+            try {
+                var data = await downloadMusicFromYoutube(keywordSearch, path);
+                if (fs.statSync(path).size > 26214400) {
+                    return message.reply("❌ File size is greater than 25MB. Unable to send.");
+                }
+                return message.reply({
+                    body: `🎵 Title: ${data.title}\n🎶 Channel: ${data.author}\n⏱️ Duration: ${convertHMS(data.dur)}\n👀 Views: ${data.viewCount}\n👍 Likes: ${data.likes}\n⏱️ Processing time: ${Math.floor((Date.now() - data.timestart) / 1000)} seconds`,
+                    attachment: fs.createReadStream(path)
+                }, () => fs.unlinkSync(path));
+            } catch (e) {
+                return message.reply("❌ Error processing the YouTube link. Please try again.");
+            }
+        } else {
+            // Search for the song
+            try {
+                var link = [], msg = "", num = 0;
+                var data = (await GetListByKeyword(keywordSearch, false, 6)).items;
+
+                for (let value of data) {
+                    link.push(value.id);
+                    num++;
+                    msg += `${num} - ${value.title} (${value.length.simpleText})\n\n`;
+                }
+
+                return message.reply({
+                    body: `🔎 Found ${link.length} results:\n\n${msg}👉 Reply with a number to select a song.`
+                }, (error, info) => {
+                    global.GoatBot.onReply.set(info.messageID, {
+                        type: "reply",
+                        name: this.config.name,
+                        messageID: info.messageID,
+                        author: event.senderID,
+                        link
+                    });
+                });
+            } catch (e) {
+                return message.reply("❌ An error occurred while searching. Please try again.");
+            }
+        }
+    },
+
+    onReply: async function ({ message, event, Reply }) {
+        const path = `${__dirname}/cache/song.mp3`;
+        try {
+            var selectedSong = Reply.link[event.body - 1];
+            if (!selectedSong) return message.reply("❌ Invalid selection.");
+
+            var data = await downloadMusicFromYoutube("https://www.youtube.com/watch?v=" + selectedSong, path);
+            if (fs.statSync(path).size > 26214400) {
+                return message.reply("❌ File size is greater than 25MB. Unable to send.");
+            }
+
+            message.unsend(Reply.messageID);
+            return message.reply({
+                body: `🎵 Title: ${data.title}\n🎶 Channel: ${data.author}\n⏱️ Duration: ${convertHMS(data.dur)}\n👀 Views: ${data.viewCount}\n👍 Likes: ${data.likes}\n⏱️ Processing time: ${Math.floor((Date.now() - data.timestart) / 1000)} seconds`,
+                attachment: fs.createReadStream(path)
+            }, () => fs.unlinkSync(path));
+        } catch (e) {
+            return message.reply("❌ An error occurred while downloading the song.");
+        }
     }
-  }
 };
 
+// Convert duration from seconds to HH:MM:SS format
 function convertHMS(value) {
-  const sec = parseInt(value, 10);
-  let hours = Math.floor(sec / 3600);
-  let minutes = Math.floor((sec - (hours * 3600)) / 60);
-  let seconds = sec - (hours * 3600) - (minutes * 60);
-  if (hours < 10) hours = "0" + hours;
-  if (minutes < 10) minutes = "0" + minutes;
-  if (seconds < 10) seconds = "0" + seconds;
-  return (hours !== "00" ? hours + ':' : '') + minutes + ':' + seconds;
+    const sec = parseInt(value, 10);
+    let hours = Math.floor(sec / 3600);
+    let minutes = Math.floor((sec - hours * 3600) / 60);
+    let seconds = sec - hours * 3600 - minutes * 60;
+
+    if (hours < 10) hours = "0" + hours;
+    if (minutes < 10) minutes = "0" + minutes;
+    if (seconds < 10) seconds = "0" + seconds;
+
+    return (hours !== "00" ? hours + ":" : "") + minutes + ":" + seconds;
 }
