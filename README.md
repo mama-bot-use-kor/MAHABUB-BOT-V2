@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/BtdKJaL.jpeg" alt="banner">
+<img src="https://drive.google.com/file/d/1U0uOUEgHklJKkh4qGX7p3Ol63J1hfgt-/view?usp=drivesdk" alt="banner">
 <h1 align="center"><img src="https://i.imgur.com/3F8GRUx.jpeg" width="22px"> ArYAN BOT</h1
 
 
