@@ -4,19 +4,17 @@ const fs = require("fs-extra");
 
 const axios = require("axios");
 module.exports = {
-  'config': {
-    'name': "/",
-    'version': "1.0",
-    'author': "MAHABUB RAHMAN",
-    'countDown': 0x5,
-    'role': 0x0,
-    'shortDescription': "no-prefix",
-    'longDescription': "Bot Will Reply You In English/Bangla Language",
-    'category': "no prefix",
-    'guide': {
-      'en': "{p}{n}"
-    }
-  },
+    config: {
+        name: "${prefix}",
+        version: "1.0",
+        author: "MR᭄﹅ MAHABUB﹅ メꪜ",
+        countDown: 5,
+        role: 0,
+        shortDescription: "Sends a random Islamic quote with an image",
+        longDescription: "This command will send a random Islamic quote along with a relevant image.",
+        category: "religion",
+        guide: "{prefix}islamic"
+    },
     
     onStart: async function ({ api, event }) {
         const quotes = [
