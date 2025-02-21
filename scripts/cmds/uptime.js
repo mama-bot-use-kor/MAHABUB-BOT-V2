@@ -1,113 +1,50 @@
-const os = require("os");
-const fs = require("fs-extra");
-
-const startTime = new Date(); // Moved outside onStart
-
 module.exports = {
-  config: {
-    name: "uptime",
-    aliases: ["up"],
-    author: "ArYAN",
-    countDown: 0,
-    role: 0,
-    category: "system",
-    longDescription: {
-      en: "Get System Information",
+  'config': {
+    'name': 'up',
+    'aliases': ["uptime", "upt"],
+    'version': "1.0",
+    'author': "★𝐌𝟗𝐇𝟒𝐌𝐌𝟒𝐃-𝐁𝟒𝐃𝟗𝐋★",
+    'role': 0x0,
+    'shortDescription': {
+      'en': "uptime robot"
     },
-  },
-  
-  onStart: async function ({ api, event, args, threadsData, usersData }) {
-    try {
-      const uptimeInSeconds = (new Date() - startTime) / 1000;
-
-      const seconds = uptimeInSeconds;
-      const days = Math.floor(seconds / (3600 * 24));
-      const hours = Math.floor((seconds % (3600 * 24)) / 3600);
-      const minutes = Math.floor((seconds % 3600) / 60);
-      const secondsLeft = Math.floor(seconds % 60);
-      const uptimeFormatted = `${days}d ${hours}h ${minutes}m ${secondsLeft}s`;
-
-      const loadAverage = os.loadavg();
-      const cpuUsage =
-        os
-          .cpus()
-          .map((cpu) => cpu.times.user)
-          .reduce((acc, curr) => acc + curr) / os.cpus().length;
-
-      const totalMemoryGB = os.totalmem() / 1024 ** 3;
-      const freeMemoryGB = os.freemem() / 1024 ** 3;
-      const usedMemoryGB = totalMemoryGB - freeMemoryGB;
-
-      const allUsers = await usersData.getAll();
-      const allThreads = await threadsData.getAll();
-      const currentDate = new Date();
-      const options = { year: "numeric", month: "numeric", day: "numeric" };
-      const date = currentDate.toLocaleDateString("en-US", options);
-      const time = currentDate.toLocaleTimeString("en-US", {
-        timeZone: "Asia/Kolkata",
-        hour12: true,
-      });
-
-      const timeStart = Date.now();
-      await api.sendMessage({
-        body: "🔎| checking........",
-      }, event.threadID);
-
-      const ping = Date.now() - timeStart;
-
-      let pingStatus = "⛔| 𝖡𝖺𝖽 𝖲𝗒𝗌𝗍𝖾𝗆";
-      if (ping < 1000) {
-        pingStatus = "✅| 𝖲𝗆𝗈𝗈𝗍𝗁 𝖲𝗒𝗌𝗍𝖾𝗆";
-      }
-      const systemInfo = `♡   ∩_∩
- （„• ֊ •„)♡
-╭─∪∪────────────⟡
-│ 𝗨𝗣𝗧𝗜𝗠𝗘 𝗜𝗡𝗙𝗢
-├───────────────⟡
-│ ⏰ 𝗥𝗨𝗡𝗧𝗜𝗠𝗘
-│  ${uptimeFormatted}
-├───────────────⟡
-│ 👑 𝗦𝗬𝗦𝗧𝗘𝗠 𝗜𝗡𝗙𝗢
-│𝙾𝚂: ${os.type()} ${os.arch()}
-│𝙻𝙰𝙽𝙶 𝚅𝙴𝚁: ${process.version}
-│𝙲𝙿𝚄 𝙼𝙾𝙳𝙴𝙻: ${os.cpus()[0].model}
-│𝚂𝚃𝙾𝚁𝙰𝙶𝙴: ${usedMemoryGB.toFixed(2)} GB / ${totalMemoryGB.toFixed(2)} GB
-│𝙲𝙿𝚄 𝚄𝚂𝙰𝙶𝙴: ${cpuUsage.toFixed(1)}%
-│𝚁𝙰𝙼 𝚄𝚂𝙶𝙴: ${process.memoryUsage().heapUsed / 1024 / 1024} MB;
-├───────────────⟡
-│ ✅ 𝗢𝗧𝗛𝗘𝗥 𝗜𝗡𝗙𝗢
-│𝙳𝙰𝚃𝙴: ${date}
-│𝚃𝙸𝙼𝙴: ${time}
-│𝚄𝚂𝙴𝚁𝚂: ${allUsers.length}
-│𝚃𝙷𝚁𝙴𝙰𝙳𝚂: ${allThreads.length}
-│𝙿𝙸𝙽𝙶: ${ping}𝚖𝚜
-│𝚂𝚃𝙰𝚃𝚄𝚂: ${pingStatus}
-╰───────────────⟡
-`;
-
-      api.sendMessage(
-        {
-          body: systemInfo,
-        },
-        event.threadID,
-        (err, messageInfo) => {
-          if (err) {
-            console.error("Error sending message with attachment:", err);
-          } else {
-            console.log(
-              "Message with attachment sent successfully:",
-              messageInfo,
-            );
-          }
-        },
-      );
-    } catch (error) {
-      console.error("Error retrieving system information:", error);
-      api.sendMessage(
-        "Unable to retrieve system information.",
-        event.threadID,
-        event.messageID,
-      );
+    'longDescription': {
+      'en': "shows uptime of bot."
+    },
+    'category': "system-mbc",
+    'guide': {
+      'en': "Use {p}up to see up of bot."
     }
   },
+  'onStart': async function ({
+    api: _0x569443,
+    message: _0x40926c,
+    threadsData: _0x4b16d1
+  }) {
+    const _0x45dac3 = require('os');
+    const _0x25148b = _0x45dac3.uptime();
+    const _0xa56507 = Math.floor(_0x25148b / 86400);
+    const _0x2728dc = Math.floor(_0x25148b % 86400 / 3600);
+    const _0xbfe13c = Math.floor(_0x25148b % 3600 / 60);
+    const _0x1d0e60 = Math.floor(_0x25148b % 60);
+    const _0x7fcee8 = new Date();
+    const _0x4509e6 = {
+      'year': "numeric",
+      'month': "numeric",
+      'day': "numeric"
+    };
+    const _0x37001b = _0x7fcee8.toLocaleDateString("en-US", _0x4509e6);
+    const _0x594ef0 = _0x7fcee8.toLocaleTimeString("en-US", {
+      'timeZone': "Asia/Dhaka",
+      'hour12': true
+    });
+    const _0x507ec7 = "OS: " + _0x45dac3.platform() + " " + _0x45dac3.release();
+    const _0x54e9fd = "Cores: " + _0x45dac3.cpus().length;
+    const _0x58acc4 = "UPTIME: " + _0xa56507 + " দিন, " + _0x2728dc + " ঘন্টা, " + _0xbfe13c + " মিন্টি " + _0x1d0e60 + " সেকেন্ড";
+    const _0x344602 = "╔╝❮❮𝗨𝗣𝗧𝗜𝗠𝗘-𝗥𝗢𝗕𝗢𝗧❯❯╚╗\n\n━❯ " + _0x58acc4 + "\n\n━━━━━━━━━━━━━━━━━━━━━━\n━❯ 𝗠𝗔𝗛𝗔𝗕𝗨𝗕 𝗥𝗔𝗛𝗠𝗔𝗡\n━❯ 𝗕𝗢𝗧 𝗡𝗔𝗠𝗘: 𝗠𝗔𝗛𝗔𝗕𝗨𝗕-𝗕𝗢𝗧\n━❯ 𝗕𝗢𝗧 𝗣𝗥𝗘𝗙𝗜𝗫:【/】\n━❯ " + _0x507ec7 + "\n━❯ " + _0x54e9fd + "\n━❯ Total Users: " + _0x4b16d1.size + "\n━❯ Total Threads: " + _0x4b16d1.size + "\n━❯ AI Usage: 0.0\n━❯ RAM Usage: " + Math.round(process.memoryUsage().rss / 1048576) + " MB\n━❯ Total(RAM): " + Math.round(_0x45dac3.totalmem() / 1073741824) + " GB\n━❯ Current(RAM): " + Math.round(_0x45dac3.freemem() / 1073741824) + " GB\n━❯ Ping: 15 ms\n━❯ Uptime(Seconds): " + Math.floor(process.uptime()) + "\n━━━━━━━━━━━━━━━━━━━━━━\n【 " + _0x37001b + " || " + _0x594ef0 + " 】";
+    _0x40926c.reply({
+      'body': _0x344602,
+      'attachment': await global.utils.getStreamFromURL("https://i.imgur.com/JjI8pQu.gif")
+    });
+  }
 };
