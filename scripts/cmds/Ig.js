@@ -5,7 +5,7 @@ const fs = require("fs-extra");
 const axios = require("axios");
 module.exports = {
     config: {
-        name: "${prefix}",
+        name: "start",
         version: "1.0",
         author: "MR᭄﹅ MAHABUB﹅ メꪜ",
         countDown: 5,
