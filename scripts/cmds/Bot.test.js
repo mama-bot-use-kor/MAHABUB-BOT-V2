@@ -80,8 +80,7 @@ module.exports = {
                     body: `🔎 Found ${link.length} results:\n\n${msg}👉 Reply with a number to select a song.`
                 }, (error, info) => {
                     global.GoatBot.onReply.set(info.messageID, {
-                        type: "reply",
-                        name: this.config.name,
+                        commandName: this.config.name,  // ✅ Fix: Add command name
                         messageID: info.messageID,
                         author: event.senderID,
                         link
@@ -95,16 +94,20 @@ module.exports = {
 
     onReply: async function ({ message, event, Reply }) {
         const path = `${__dirname}/cache/song.mp3`;
+        
+        if (!Reply.link[event.body - 1]) {
+            return message.reply("❌ Invalid selection. Please reply with a valid number.");
+        }
+
         try {
             var selectedSong = Reply.link[event.body - 1];
-            if (!selectedSong) return message.reply("❌ Invalid selection.");
-
             var data = await downloadMusicFromYoutube("https://www.youtube.com/watch?v=" + selectedSong, path);
+            
             if (fs.statSync(path).size > 26214400) {
                 return message.reply("❌ File size is greater than 25MB. Unable to send.");
             }
 
-            message.unsend(Reply.messageID);
+            message.unsend(Reply.messageID);  // ✅ Remove the old selection message
             return message.reply({
                 body: `🎵 Title: ${data.title}\n🎶 Channel: ${data.author}\n⏱️ Duration: ${convertHMS(data.dur)}\n👀 Views: ${data.viewCount}\n👍 Likes: ${data.likes}\n⏱️ Processing time: ${Math.floor((Date.now() - data.timestart) / 1000)} seconds`,
                 attachment: fs.createReadStream(path)
