@@ -130,7 +130,7 @@ module.exports = {
     }
     if (args[0] === "list") {
       try {
-        const res = await axios.get(`${await baseApiUrl()}/mahabub`);
+        const res = await axios.get(`${await baseApiUrl()}/album?list=mahabub`);
         const data = res.data.data;
         const videoCount = data.match(/\d+/g).reduce((acc, num) => acc + parseInt(num), 0);
         api.sendMessage(
