@@ -1,5 +1,5 @@
 <img src="https://i.imgur.com/KIi7lSn.gif" alt="banner">
-<h1 align="center"><img src="https://i.imgur.com/3F8GRUx.jpeg" width="22px"> MAHABUB BOT</h1
+<h1 align="center"><img src="https://avatars.githubusercontent.com/u/190441700?v=4" width="22px"> MAHABUB BOT</h1
 
 
 ## C3C FBstate
@@ -33,5 +33,5 @@ Enjoy the running render 🙂❤️🦆
 **YOUTUBE**
 
 Goatbot running from youtube video
-[Vex_ArYAN](https://youtu.be/FXjDP5VWjg4?si=02AY7shzbcMqDda2).
+[MR᭄﹅ MAHABUB﹅ メꪜ](https://youtu.be/FXjDP5VWjg4?si=02AY7shzbcMqDda2).
 - 
