@@ -34,7 +34,7 @@ module.exports = {
       const categories = {};
       let msg = "";
 
-      msg += `╔═════▓࿇࿇▓═════╗\n             𝐀𝐋𝐋 𝐂𝐌𝐃 𝐋𝐈𝐒𝐓 𝗜𝗡 𝗥𝗜𝗠𝗢𝗡 𝔅𝔞𝔫𝔨𝔞𝔦 𝔟𝔬𝔱 𝗕𝗢𝗧\n╚═════▓࿇࿇▓═════╝\n\n`; // replace with your name 
+      msg += `╔═════▓࿇࿇▓═════╗\n             𝐀𝐋𝐋 𝐂𝐌𝐃 𝐋𝐈𝐒𝐓 𝗜𝗡 𝗠𝗔𝗛𝗔𝗕𝗨𝗕-𝗕𝗢𝗧\n╚═════▓࿇࿇▓═════╝\n\n`; // replace with your name 
 
       for (const [name, value] of commands) {
         if (value.config.role > 1 && role < value.config.role) continue;
@@ -60,9 +60,9 @@ module.exports = {
       });
 
       const totalCommands = commands.size;
-      msg += `\n𝗧𝗢𝗧𝗔𝗟 𝙲𝚖𝚍 ${totalCommands}\n𝚌𝚘𝚖𝚖𝚊𝚗𝚍 𝚝𝚑𝚊t 𝚞 𝚌𝚊𝚗 𝚞𝚜𝚎 in lord Rimon bot -`;
+      msg += `\n𝗧𝗢𝗧𝗔𝗟 𝙲𝚖𝚍 ${totalCommands}\n𝚌𝚘𝚖𝚖𝚊𝚗𝚍 𝚝𝚑𝚊t 𝚞 𝚌𝚊𝚗 𝚞𝚜𝚎 𝙼𝚊𝚑𝚊𝚋𝚞𝚋-𝙱𝚘𝚝 -`;
       msg += `𝚝𝚢𝚙𝚎: 「${prefix} 𝗵𝗲𝗹𝗽」+「 𝐇𝐄𝐋𝐏 𝐂𝐌𝐃」𝚝𝚘 𝚟𝚒𝚎𝚠 𝚍𝚎𝚝𝚊𝚒𝚕𝚜 𝚘𝚏 𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜\n`;
-      msg += `👑 | 𝐓𝐇𝐀𝐍𝐊𝐒 𝐅𝐎𝐑 𝐔𝐒𝐈𝐍𝐆 𝗠𝗥 𝗥𝗜𝗠𝗢𝗡 𝐁𝐎𝐓 𝐖𝐄'𝐋𝐋 𝐂𝐎𝐌𝐄 𝐖𝐈𝐓𝐇 𝐍𝐄𝐖 𝐔𝐏𝐃𝐀𝐓𝐄 𝐄𝐕𝐄𝐑𝐘 𝐖𝐄𝐄𝐊`; // its not decoy so change it if you want 
+      msg += `👑 | 𝐓𝐇𝐀𝐍𝐊𝐒 𝐅𝐎𝐑 𝐔𝐒𝐈𝐍𝐆 𝗠𝗔𝗛𝗔𝗕𝗨𝗕-𝐁𝐎𝐓 𝐖𝐄'𝐋𝐋 𝐂𝐎𝐌𝐄 𝐖𝐈𝐓𝐇 𝐍𝐄𝐖 𝐔𝐏𝐃𝐀𝐓𝐄 𝐄𝐕𝐄𝐑𝐘 𝐖𝐄𝐄𝐊`; // its not decoy so change it if you want 
 
       const helpListImages = [
         "https://i.imgur.com/pz79pip.mp4", // don't change imgur
@@ -95,7 +95,7 @@ module.exports = {
         const guideBody = configCommand.guide?.en || "No guide available.";
         const usage = guideBody.replace(/{p}/g, prefix).replace(/{n}/g, configCommand.name);
 
-        const response = `╭── 𝐍𝐀𝐌𝐄 𝐎𝐖𝐍𝐄𝐑 - 𝗠𝗥 𝗡𝗢𝗕𝗜𝗧𝗔 𝗩𝗔𝗜 (𝕽𝖎𝖒𝖔𝖓) ────⭓
+        const response = `╭── 𝐍𝐀𝐌𝐄 𝐎𝐖𝐍𝐄𝐑 - 𝗠𝗔𝗛𝗔𝗕𝗨𝗕 𝗥𝗔𝗛𝗠𝗔𝗡 ────⭓
   │ ${configCommand.name}
   ├── INFO
   │ Description: ${longDescription}
@@ -108,8 +108,8 @@ module.exports = {
   ├── Usage
   │ ${usage}
   ├── Notes
-  │ THIS BOT HAS BEEN MADE BY MR NOBITA VAI (RIMON) WITH THE HELP OF ANONYMOUS SANAM
-  │ FOR ANY HELP YOU CAN CONTRACT WITH OWNER MR RIMON 👑 -https://www.facebook.com/profile.php?id=61552209843370
+  │ THIS BOT HAS BEEN MADE BY MR᭄﹅ MAHABUB﹅ メꪜ
+  │ FOR ANY HELP YOU CAN CONTRACT WITH OWNER MR᭄﹅ MAHABUB﹅ メꪜ 👑 -https://www.facebook.com/www.xnxx.com140
   ╰━━━━━━━❖`;
 
         await message.reply(response);
