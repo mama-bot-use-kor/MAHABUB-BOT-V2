@@ -3,13 +3,13 @@ const axios = require("axios");
 const path = require("path");
 const { getPrefix } = global.utils;
 const { commands, aliases } = global.GoatBot;
-const doNotDelete = "『[✰AYAN💌』"; // don't change neme
+const doNotDelete = "『[✰MAHABUB💌』"; // don't change neme
 
 module.exports = {
   config: {
     name: "help",
     version: "1.17",
-    author: " MR.AYAN", // original author AYAN
+    author: " MR᭄﹅ MAHABUB﹅ メꪜ", // original author MR᭄﹅ MAHABUB﹅ メꪜ
     countDown: 0,
     role: 0,
     shortDescription: {
