@@ -1,68 +1,53 @@
-const { createReadStream, unlinkSync } = require("fs-extra");
-const { resolve } = require("path");
-const axios = require('axios');
+//https://raw.githubusercontent.com/MR-MAHABUB-004/MAHABUB-BOT-STORAGE/refs/heads/main/anime.json";
+
+const axios = require("axios");
 
 module.exports = {
-	config: {
-		name: "anime",
-		aliases: [],
-		version: "1.0",
-		author: "kivv",
-		countDown: 5,
-		role: 2,
-		shortDescription: "18+",
-		longDescription: "",
-		category: "anime🌸",
-		guide: "{pn}"
-	},
-	onLoad: async function () {
-		const { resolve } = require("path");
-		const { existsSync, readFileSync } = require("fs-extra");
-		const { downloadFile } = global.utils;
-		const path = resolve(__dirname, 'cache', 'alime.json');
-		const url = "https://raw.githubusercontent.com/ProCoderMew/Module-Miraiv2/Mew/data/alime.json";
+  config: {
+    name: "anime",
+    aliases: ["ani"],
+    version: "1.0",
+    author: "‎MR᭄﹅ MAHABUB﹅ メꪜ",
+    countDown: 10,
+    role: 0,
+    shortDescription: "anime videos",
+    longDescription: "anime videos from mahabub",
+    category: "user",
+    guide: "{p}{n}rv",
+  },
 
-		try {
-			if (!existsSync(path)) await downloadFile(url, path);
-			const data = JSON.parse(readFileSync(path));
-			if (data.length == 0) await downloadFile(url, path);
-			return;
-		} catch {
-			await downloadFile(url, path);
-		}
-	},
-	onStart: async function ({ event, api, args }) {
-		const { threadID, senderID, messageID } = event;
+  onStart: async function ({ api, event, message }) {
+    const senderID = event.senderID;
 
-		const out = (msg, callback = function () {}) => api.sendMessage(msg, threadID, callback, messageID);
-		const { sfw, nsfw } = require("./cache/alime.json");
-		var apiUrl;
+    // লোডিং মেসেজ পাঠানো
+    const loadingMessage = await message.reply({
+      body: "Loading random video... Please wait! (up to 5 sec)...\n𝐍𝐨𝐰 𝐥𝐨𝐚𝐝𝐢𝐧𝐠. . .\n█▒▒▒▒▒▒▒▒▒",
+    });
 
-		if (!sfw.hasOwnProperty(args[0]) && !nsfw.hasOwnProperty(args[0])) {
-			var nsfwData = Object.keys(nsfw).join(", ");
-			var sfwData = Object.keys(sfw).join(", ");
-			return out("=== Sfw Tag ===\n" + sfwData + "\n\n=== Nsfw Tag (مش شغال)===\n" + nsfwData);
-		} else {
-			if (sfw.hasOwnProperty(args[0])) apiUrl = sfw[args[0]];
-			else if (nsfw.hasOwnProperty(args[0])) apiUrl = nsfw[args[0]];
+    // JSON ফাইলের URL
+    const jsonUrl = "https://raw.githubusercontent.com/MR-MAHABUB-004/MAHABUB-BOT-STORAGE/refs/heads/main/anime.json";
 
-			try {
-				const { data: apiData } = await axios.get(apiUrl);
-				const url = apiData.data.response.url;
-				const ext = url.split(".").slice(-1)[0];
-				const path = resolve(__dirname, 'cache', `${args[0]}_${senderID}.${ext}`);
+    try {
+      // JSON ফাইল থেকে ডাটা নিয়ে আসা
+      const response = await axios.get(jsonUrl);
+      const videoLinks = response.data.videos;
 
-				await global.utils.downloadFile(url, path);
+      if (!videoLinks || videoLinks.length === 0) {
+        return message.reply("No videos available.");
+      }
 
-				return out({
-					attachment: createReadStream(path)
-				}, function () {
-					return unlinkSync(path);
-				});
-			} catch (error) {
-				console.log(error);
-				return out("Sorry, there was an error with the API.");
-			}
-		}
-	}
+      // এলোমেলো একটি ভিডিও লিংক নির্বাচন
+      const randomVideo = videoLinks[Math.floor(Math.random() * videoLinks.length)];
+
+      // ভিডিও পাঠানো
+      message.reply({
+        body: "❰ ANIME VIDEO ❱",
+        attachment: await global.utils.getStreamFromURL(randomVideo),
+      });
+
+    } catch (error) {
+      console.error("Error fetching video links:", error);
+      return message.reply("Failed to load video links. Please try again later.");
+    }
+  }
 };
