@@ -1,57 +1,72 @@
-const axios = require("axios");
-const fs = require("fs-extra");
-const path = require("path");
-const moment = require("moment-timezone");
+const axios = require('axios');
+const moment = require('moment-timezone');
 
 module.exports = {
     config: {
-        name: "admin",
-        version: "1.0.0",
-        author: "nayan",
+        name: "info",
+        aliases: ["inf", "in4"],
+        version: "2.0",
+        author: "VEX_ADNAN",
         countDown: 5,
         role: 0,
-        shortDescription: "Admin details and image",
-        longDescription: "Displays admin details along with an image",
-        category: "info",
-        guide: "{pn}"
+        shortDescription: { en: "Sends bot and admin info with an image." },
+        longDescription: { en: "Sends bot and admin info with an image." },
+        category: "Information",
+        guide: { en: "{pn}" }
     },
 
-    onStart: async function ({ api, event }) {
-        const cachePath = path.join(__dirname, "cache");
-        if (!fs.existsSync(cachePath)) fs.mkdirSync(cachePath);
+    onStart: async function ({ message }) {
+        this.sendInfo(message);
+    },
 
-        const imagePath = path.join(cachePath, "admin.png");
-        const fbProfileUrl = `https://graph.facebook.com/100014754734049/picture?height=720&width=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
+    onChat: async function ({ event, message }) {
+        if (event.body && event.body.trim().toLowerCase() === "info") {
+            this.sendInfo(message);
+        }
+    },
+
+    sendInfo: async function (message) {
+        const botName = "𝗠𝗔𝗛𝗔𝗕𝗨𝗕-𝗕𝗢𝗧";
+        const botPrefix = "/";
+        const authorName = "𝗠𝗔𝗛𝗔𝗕𝗨𝗕 𝗥𝗔𝗛𝗠𝗔𝗡";
+        const authorFB = "m.me/www.xnxx.com140";
+        const authorInsta = "@mahabub_rahman_404";
+        const status = "𝚂𝙸𝙽𝙶𝙻𝙴..!";
+
+        const now = moment().tz('Asia/Dhaka');
+        const date = now.format('dddd, MMMM Do YYYY');
+        const time = now.format('h:mm:ss A');
+
+        const uptime = process.uptime();
+        const seconds = Math.floor(uptime % 60);
+        const minutes = Math.floor((uptime / 60) % 60);
+        const hours = Math.floor((uptime / (60 * 60)) % 24);
+        const days = Math.floor(uptime / (60 * 60 * 24));
+        const uptimeString = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
         try {
-            const response = await axios.get(fbProfileUrl, { responseType: "stream" });
-            const writer = fs.createWriteStream(imagePath);
-            response.data.pipe(writer);
+            const response = await axios.get("https://raw.githubusercontent.com/MR-MAHABUB-004/MAHABUB-BOT-STORAGE/refs/heads/main/Commands/Mahabub.json");
+            const urls = response.data;
+            const link = urls[Math.floor(Math.random() * urls.length)];
 
-            writer.on("finish", async () => {
-                await api.sendMessage({
-                    body: `
---------------------------------------------
-𝐍𝐚𝐦𝐞       : 𝐌𝐚𝐡𝐚𝐛𝐮𝐛 𝐑𝐚𝐡𝐦𝐚𝐧
-𝐑𝐞𝐥𝐢𝐠𝐢𝐨𝐧   : 𝐈𝐬𝐥𝐚𝐦
-𝐏𝐞𝐫𝐦𝐚𝐧𝐞𝐧𝐭 𝐀𝐝𝐝𝐫𝐞𝐬𝐬: 𝐁𝐨𝐠𝐮𝐫𝐚, 𝐑𝐚𝐣𝐬𝐡𝐚𝐡𝐢
-𝐂𝐮𝐫𝐫𝐞𝐧𝐭 𝐀𝐝𝐝𝐫𝐞𝐬𝐬: 𝐊𝐮𝐧𝐝𝐨𝐠𝐫𝐚𝐦, 𝐀𝐝𝐨𝐦𝐝𝐢𝐠𝐡𝐢, 𝐁𝐨𝐠𝐮𝐫𝐚
-𝐆𝐞𝐧𝐝𝐞𝐫.   : 𝐌𝐚𝐥𝐞
-𝐀𝐠𝐞           : 𝟏𝟖+
-𝐑𝐞𝐥𝐚𝐭𝐢𝐨𝐧𝐬𝐡𝐢𝐩 : 𝐒𝐢𝐧𝐠𝐥𝐞
-𝐖𝐨𝐫𝐤        : 𝐒𝐭𝐮𝐝𝐞𝐧𝐭
-𝐆𝐦𝐚𝐢𝐥       : mahaburpk479@gmail.com
-𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩: wa.me/+8801312737981
-𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦  : t.me/.....
-𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 : ミ𝐌　𝐀　𝐇　𝐀　𝐁　𝐔　 𝐁ミ
-𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐋𝐢𝐧𝐤 : https://www.facebook.com/www.xnxx.com140`,
-                    attachment: fs.createReadStream(imagePath)
-                }, event.threadID, () => fs.unlinkSync(imagePath));
+            message.reply({
+                body: `╭────────────◊
+├‣ 𝐁𝐨𝐭 & 𝐎𝐰𝐧𝐞𝐫 𝐈𝐧𝐟𝐨𝐫𝐦𝐚𝐭𝐢𝐨𝐧 
+├‣ 𝐍𝐚𝐦𝐞: ${authorName}
+├‣ 𝐁𝐨𝐭 𝐍𝐚𝐦𝐞: ${botName}
+├‣ 𝐏𝐫𝐞𝐟𝐢𝐱: ${botPrefix}
+├‣ 𝐅𝐛: ${authorFB}
+├‣ 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦: ${authorInsta}
+├‣ 𝐑𝐞𝐥𝐚𝐭𝐢𝐨𝐧𝐬𝐡𝐢𝐩: ${status} 
+├‣ 𝐃𝐚𝐭𝐞: ${date}
+├‣ 𝐓𝐢𝐦𝐞: ${time}
+├‣ 𝐔𝐩𝐭𝐢𝐦𝐞: ${uptimeString}
+╰────────────◊`,
+                attachment: await global.utils.getStreamFromURL(link)
             });
-
         } catch (error) {
-            console.error("Error fetching image:", error);
-            return api.sendMessage("Sorry, there was an error fetching the image.", event.threadID);
+            console.error("𝙴𝚛𝚛𝚘𝚛 𝙵𝚎𝚝𝚌𝚑𝚒𝚗𝚐 𝚜𝚎𝚛𝚟𝚎𝚛 𝚍𝚎𝚝𝚊...!", error);
+            message.reply("❌ 𝙴𝚛𝚛𝚘𝚛 𝙵𝚎𝚝𝚌𝚑𝚒𝚗𝚐 𝚋𝚘𝚝 𝚒𝚗𝚏𝚘. 𝙿𝚕𝚎𝚊𝚜𝚎 𝚝𝚛𝚢 𝚊𝚐𝚊𝚒𝚗 𝚕𝚊𝚝𝚎𝚛.");
         }
     }
 };
