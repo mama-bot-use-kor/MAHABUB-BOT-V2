@@ -65,7 +65,6 @@ module.exports = {
       msg += `👑 | 𝐓𝐇𝐀𝐍𝐊𝐒 𝐅𝐎𝐑 𝐔𝐒𝐈𝐍𝐆 𝗠𝗔𝗛𝗔𝗕𝗨𝗕-𝐁𝐎𝐓 𝐖𝐄'𝐋𝐋 𝐂𝐎𝐌𝐄 𝐖𝐈𝐓𝐇 𝐍𝐄𝐖 𝐔𝐏𝐃𝐀𝐓𝐄 𝐄𝐕𝐄𝐑𝐘 𝐖𝐄𝐄𝐊`; // its not decoy so change it if you want 
 
       const helpListImages = [
-        "https://i.imgur.com/pz79pip.mp4", // don't change imgur
         "https://i.imgur.com/j4Gl2ZT.gif",
         "https://i.imgur.com/z8XiuWy.mp4",
         "https://i.imgur.com/Xl2vJSB.gif",
