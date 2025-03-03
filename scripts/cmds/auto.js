@@ -26,7 +26,7 @@ let autoLinkStates = loadAutoLinkStates();
 module.exports = {
   threadStates: {},
   config: {
-    name: 'autolink',
+    name: 'autolink3',
     version: '3.0',
     author: 'Vex_Kshitiz',
     countDown: 5,
@@ -71,7 +71,7 @@ module.exports = {
       } else {
         api.sendMessage("", event.threadID, event.messageID);
       }
-      api.setMessageReaction("🪄", event.messageID, (err) => {}, true);
+      api.setMessageReaction("🫦", event.messageID, (err) => {}, true);
     }
   },
   downLoad: function (url, api, event) {
@@ -106,7 +106,7 @@ module.exports = {
       }
 
       const shortUrl = await shortenURL(res);
-      const messageBody = `\n            \n \n\n✅🔗 Download Url: ${shortUrl}`;
+      const messageBody = `╔════ஜ۩۞۩ஜ═══╗\n          DOWNLOAD SUCCESSFUL..!\n ╚════ஜ۩۞۩ஜ═══╝\n\n🔗𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝚁𝚄𝙻: ${shortUrl}`;
 
       api.sendMessage({
         body: messageBody,
@@ -132,7 +132,7 @@ module.exports = {
         response.data.pipe(fs.createWriteStream(path));
         response.data.on('end', async () => {
           const shortUrl = await shortenURL(videoUrl);
-          const messageBody = `\n           \n \n\n✅🔗 Download Url: ${shortUrl}`;
+          const messageBody = `╔════ஜ۩۞۩ஜ═══╗\n           DOWNLOAD SUCCESSFUL..!\n ╚════ஜ۩۞۩ஜ═══╝\n\n🔗𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝚁𝚄𝙻: ${shortUrl}`;
 
           api.sendMessage({
             body: messageBody,
@@ -160,7 +160,7 @@ module.exports = {
       }
 
       const shortUrl = await shortenURL(res);
-      const messageBody = `\n           \n \n\n✅🔗 Download Url: ${shortUrl}`;
+      const messageBody = `╔════ஜ۩۞۩ஜ═══╗\n           DOWNLOAD SUCCESSFUL..!\n ╚════ஜ۩۞۩ஜ═══╝\n\n🔗𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝚁𝚄𝙻: ${shortUrl}`;
 
       api.sendMessage({
         body: messageBody,
@@ -172,7 +172,7 @@ module.exports = {
   },
   downloadTwitter: async function (url, api, event, path) {
     try {
-      const res = await axios.get(`https://nayan-video-downloader.vercel.app/alldown?url=${encodeURIComponent(url)}`);
+      const res = await axios.get(`https://xdl-twitter.vercel.app/kshitiz?url=${encodeURIComponent(url)}`);
       const videoUrl = res.data.url;
 
       const response = await axios({
@@ -188,7 +188,7 @@ module.exports = {
       response.data.pipe(fs.createWriteStream(path));
       response.data.on('end', async () => {
         const shortUrl = await shortenURL(videoUrl);
-        const messageBody = `\n           \n \n\n✅🔗 Download Url: ${shortUrl}`;
+        const messageBody = `╔════ஜ۩۞۩ஜ═══╗\n           DOWNLOAD SUCCESSFUL..!\n ╚════ஜ۩۞۩ஜ═══╝\n\n🔗𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝚁𝚄𝙻: ${shortUrl}`;
 
         api.sendMessage({
           body: messageBody,
@@ -201,7 +201,7 @@ module.exports = {
   },
   downloadPinterest: async function (url, api, event, path) {
     try {
-      const res = await axios.get(`https://nayan-video-downloader.vercel.app/alldown?url=${encodeURIComponent(url)}`);
+      const res = await axios.get(`https://pindl-pinterest.vercel.app/kshitiz?url=${encodeURIComponent(url)}`);
       const videoUrl = res.data.url;
 
       const response = await axios({
@@ -217,7 +217,7 @@ module.exports = {
       response.data.pipe(fs.createWriteStream(path));
       response.data.on('end', async () => {
         const shortUrl = await shortenURL(videoUrl);
-        const messageBody = `\n           \n \n\n✅🔗 Download Url: ${shortUrl}`;
+        const messageBody = `╔════ஜ۩۞۩ஜ═══╗\n           DOWNLOAD SUCCESSFUL..!\n ╚════ஜ۩۞۩ஜ═══╝\n\n🔗𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝚁𝚄𝙻: ${shortUrl}`;
 
         api.sendMessage({
           body: messageBody,
@@ -230,7 +230,7 @@ module.exports = {
   },
   downloadYouTube: async function (url, api, event, path) {
     try {
-      const res = await axios.get(`https://nayan-video-downloader.vercel.app/alldown?url=${encodeURIComponent(url)}`);
+      const res = await axios.get(`https://yt-downloader-eta.vercel.app/kshitiz?url=${encodeURIComponent(url)}`);
       const videoUrl = res.data['480p'];
 
       const response = await axios({
@@ -246,7 +246,7 @@ module.exports = {
       response.data.pipe(fs.createWriteStream(path));
       response.data.on('end', async () => {
         const shortUrl = await shortenURL(videoUrl);
-        const messageBody = `\n           𝗜𝘁𝘇 \n\n\n✅🔗 Download Url: ${shortUrl}`;
+        const messageBody = `╔════ஜ۩۞۩ஜ═══╗\n           DOWNLOAD SUCCESSFUL..!\n ╚════ஜ۩۞۩ஜ═══╝\n\n🔗𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝚁𝚄𝙻: ${shortUrl}`;
 
         api.sendMessage({
           body: messageBody,
@@ -263,7 +263,7 @@ module.exports = {
       if (url.includes("instagram")) {
         axios({
           method: "GET",
-          url: `https://nayan-video-downloader.vercel.app/alldown?url=${encodeURIComponent(url)}`
+          url: `https://insta-downloader-ten.vercel.app/insta?url=${encodeURIComponent(url)}`
         })
         .then(res => {
           console.log(`API Response: ${JSON.stringify(res.data)}`);
