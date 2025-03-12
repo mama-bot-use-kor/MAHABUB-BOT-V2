@@ -29,8 +29,7 @@ module.exports = {
   },
 
   onStart: async function ({ api, event }) {
-    // এই অংশটি সম্পূর্ণভাবে মুছে ফেলা হয়েছে
-    // autoLinkStates[threadID] এবং /autolink on, /autolink off কমান্ড চেকিং বাদ দেয়া হয়েছে
+
   },
 
   onChat: async function ({ api, event }) {
@@ -42,18 +41,17 @@ module.exports = {
 
     const url = linkMatch[0];
 
-    // স্টেট চেকিং করা হয়নি, তাই যেকোনো লিংকেই কাজ করবে
     api.setMessageReaction("⏳", event.messageID, () => {}, true);
 
     try {
       const res = await axios.get(`https://nayan-video-downloader.vercel.app/alldown?url=${encodeURIComponent(url)}`);
       if (!res.data.data || (!res.data.data.high && !res.data.data.low)) {
-        return api.sendMessage("❌ Couldn't find a high or low-quality video link.", event.threadID, event.messageID);
+        return api.sendMessage("", event.threadID, event.messageID);
       }
 
       const { title, high, low } = res.data.data;
 
-      const msg = `🎬 *${title}*`;
+      const msg = `« ᴛɪᴛᴇʟ »🎬 *${title}*`;
 
       const videoUrl = high || low; // If high link isn't available, use the low link
 
