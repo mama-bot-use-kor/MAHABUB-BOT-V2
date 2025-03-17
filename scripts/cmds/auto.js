@@ -21,7 +21,7 @@ module.exports = {
   config: {
     name: 'autolink',
     version: '3.5',
-    author: 'MOHAMMAD NAYAN',
+    author: 'MR᭄﹅ MAHABUB﹅ メꪜ',
     countDown: 5,
     role: 0,
     shortDescription: 'Auto-download and send videos with title',
@@ -51,7 +51,7 @@ module.exports = {
 
       const { title, high, low } = res.data.data;
 
-      const msg = `« ᴛɪᴛᴇʟ »🎬 *${title}*`;
+      const msg = `╭────────────◊\n« TITLE » ${title}\n╰────────────◊``;
 
       const videoUrl = high || low; // If high link isn't available, use the low link
 
