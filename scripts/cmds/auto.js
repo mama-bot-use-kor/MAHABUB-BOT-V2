@@ -1,4 +1,4 @@
-/cmd install auto.js const fs = require("fs-extra");
+const fs = require("fs-extra");
 const axios = require("axios");
 const request = require("request");
 
