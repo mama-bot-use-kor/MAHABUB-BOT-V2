@@ -1,4 +1,4 @@
-const fs = require("fs-extra");
+/cmd install auto.js const fs = require("fs-extra");
 const axios = require("axios");
 const request = require("request");
 
@@ -29,7 +29,7 @@ module.exports = {
   },
 
   onStart: async function ({ api, event }) {
-
+    
   },
 
   onChat: async function ({ api, event }) {
@@ -51,9 +51,9 @@ module.exports = {
 
       const { title, high, low } = res.data.data;
 
-      const msg = `╭────────────◊\n« TITLE » ${title}\n╰────────────◊``;
+      const msg = ` ╭──────────────────◊\n\n\n《TITLE》: *${title}* \n\n\n╰──────────────────◊`;
 
-      const videoUrl = high || low; // If high link isn't available, use the low link
+      const videoUrl = high || low; 
 
       request(videoUrl).pipe(fs.createWriteStream("video.mp4")).on("close", () => {
         api.sendMessage(
@@ -63,7 +63,7 @@ module.exports = {
           },
           event.threadID,
           () => {
-            fs.unlinkSync("video.mp4"); // Delete after sending
+            fs.unlinkSync("video.mp4"); 
           }
         );
       });
