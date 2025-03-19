@@ -12,20 +12,37 @@ https://drive.google.com/file/d/1JccCr5N_5_QrO71LS5bp0lJ5BUA-W4oY/view?usp=drive
 ________________
 
 ## Render.com
-You need to rename 3 files if you want to run the render ❤️
+PASTE THIS CODE INTO .github/workflows/main.yml (important)
 
 ```bash
-1.
-config.json { delete }
-config.dev.json { right }
+name: Node.js CI
 
-2.
-commandconfig.json { delete }
-commandconfig.dev.json { right }
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
-3
-account.txt { delete }
-account.dev.txt { right }
+jobs:
+  build:
+
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install
+    - run: npm start
 ```
 
 Enjoy the running render 🙂❤️🦆
