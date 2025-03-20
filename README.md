@@ -45,10 +45,7 @@ jobs:
     - run: npm start
 ```
 
-Enjoy the running render 🙂❤️🦆
+Enjoy the bot 🙂❤️😃 
 
-**YOUTUBE**
-
-Goatbot running from youtube video
-[MR᭄﹅ MAHABUB﹅ メꪜ](https://youtu.be/FXjDP5VWjg4?si=02AY7shzbcMq).
-- 
+**FACEBOOK**
+https://www.facebook.com/www.xnxx.com140
