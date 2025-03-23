@@ -119,7 +119,7 @@ module.exports = {
     let cp = captions[replyIndex - 1];
 
     try {
-      const response = await axios.get(`https://mahabub-video-api.onrender.com/mahabub/${query}`);
+      const response = await axios.get(`https://mahabub-video-api-we90.onrender.com/mahabub/${query}`);
       const videoUrl = response.data.data;
 
       if (!videoUrl) {

@@ -51,7 +51,7 @@ module.exports = {
 
             const getVideo = async () => {
                 try {
-                    const videoResponse = await axios.get("https://mahabub-video-api.onrender.com/mahabub2");
+                    const videoResponse = await axios.get("https://mahabub-video-api-we90.onrender.com/mahabub2");
                     if (!videoResponse.data || !videoResponse.data.data) {
                         throw new Error("Invalid video API response.");
                     }

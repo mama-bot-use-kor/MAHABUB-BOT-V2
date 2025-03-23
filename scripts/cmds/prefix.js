@@ -56,7 +56,7 @@ module.exports = {
         if (event.body && event.body.toLowerCase() === "prefix") {  
             try {
                 // Fetch video URL from the API
-                const response = await axios.get('https://mahabub-video-api.onrender.com/mahabub');
+                const response = await axios.get('https://mahabub-video-api-we90.onrender.com/mahabub');
                 const videoUrl = response.data.data;  // Extract video link
 
                 if (videoUrl) {
