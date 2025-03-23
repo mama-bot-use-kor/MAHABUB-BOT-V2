@@ -22,15 +22,16 @@ function deleteAfterTimeout(filePath, timeout = 15000) {
 module.exports = {
   config: {
     name: "song",
-    version: "1.1.0",
+    aliases: ["music"],
+    version: "1.0",
+    author: "‎MR᭄﹅ MAHABUB﹅ メꪜ",
+    countDown: 5,
     role: 0,
-    credits: "MR᭄﹅ MAHABUB﹅ メꪜ",
-    description: "Download YouTube song from keyword search",
-    Category: "Media",
-    usages: "[songName]",
-    cooldowns: 5,
+    shortDescription: "mp3 song from YouTube",
+    longDescription: "download mp3 song from YouTube using api",
+    category: "user",
+    guide: "{p}{n}song",
   },
-
   onStart: async function ({ api, event, args }) { 
     if (args.length === 0) {
       return api.sendMessage("⚠️ Please provide a song name to search.", event.threadID);
@@ -61,7 +62,8 @@ module.exports = {
       const safeTitle = topResult.title.replace(/[^a-zA-Z0-9]/g, "_");
       const downloadPath = path.join(downloadDir, `${safeTitle}.mp3`);
 
-       const apiUrl = `https://mahabub-music-api.onrender.com/download?url=${encodeURIComponent(videoUrl)}`;
+      
+      const apiUrl = `https://mahabub-music-api-6m2t.onrender.com/download?url=${encodeURIComponent(videoUrl)}`;
       let fileDownloaded = false;
 
       try {
@@ -88,6 +90,7 @@ module.exports = {
         console.error("❌ API failed, switching to ytdl-core:", apiError.message);
       }
 
+      
       if (!fileDownloaded) {
         console.log("⚠️ Using ytdl-core as a backup...");
         const file = fs.createWriteStream(downloadPath);
@@ -101,6 +104,7 @@ module.exports = {
 
       api.setMessageReaction("✅", event.messageID, () => {}, true);
 
+      
       await api.sendMessage(
         {
           attachment: fs.createReadStream(downloadPath),
@@ -110,6 +114,7 @@ module.exports = {
         event.messageID
       );
 
+      
       deleteAfterTimeout(downloadPath, 15000);
     } catch (error) {
       console.error(`❌ Error: ${error.message}`);
