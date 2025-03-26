@@ -1,4 +1,5 @@
 const axios = require("axios");
+const fs = require("fs");
 
 module.exports = {
     config: {
@@ -55,24 +56,24 @@ module.exports = {
     onChat: async function ({ event, message, getLang }) {  
         if (event.body && event.body.toLowerCase() === "prefix") {  
             try {
-                // Fetch video URL from the API
-                const response = await axios.get('https://mahabub-video-api-we90.onrender.com/mahabub');
-                const videoUrl = response.data.data;  // Extract video link
+                // Fetch prefix information from the new API
+                const response = await axios.get('https://mahabub-apis.vercel.app/prefix');
+                const prefixData = response.data;  // Extract data from the API response
 
-                if (videoUrl) {
-                    // Send the video URL as an attachment
+                if (prefixData && prefixData.data) {
+                    // Send the prefix information along with the video URL
                     return message.reply({
                         body: getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID)),
-                        attachment: await global.utils.getStreamFromURL(videoUrl)
+                        attachment: await global.utils.getStreamFromURL(prefixData.data) // Use the 'data' field as the video URL
                     });
                 } else {
-                    // If no video link is available
+                    // If no video URL is found in the response
                     return message.reply("No video available at the moment.");
                 }
 
             } catch (error) {
-                console.error("Error fetching video:", error);
-                return message.reply("An error occurred while fetching the video.");
+                console.error("Error fetching prefix data:", error);
+                return message.reply("An error occurred while fetching the prefix data.");
             }
         }  
     },
