@@ -1,1 +1,67 @@
- var _0xc52e=["","split","0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/","slice","indexOf","","",".","pow","reduce","reverse","0"];function _0xe39c(d,e,f){var g=_0xc52e[2][_0xc52e[1]](_0xc52e[0]);var h=g[_0xc52e[3]](0,e);var i=g[_0xc52e[3]](0,f);var j=d[_0xc52e[1]](_0xc52e[0])[_0xc52e[10]]()[_0xc52e[9]](function(a,b,c){if(h[_0xc52e[4]](b)!==-1)return a+=h[_0xc52e[4]](b)*(Math[_0xc52e[8]](e,c))},0);var k=_0xc52e[0];while(j>0){k=i[j%f]+k;j=(j-(j%f))/f}return k||_0xc52e[11]}eval(function(h,u,n,t,e,r){r="";for(var i=0,len=h.length;i<len;i++){var s="";while(h[i]!==n[e]){s+=h[i];i++}for(var j=0;j<n.length;j++)s=s.replace(new RegExp(n[j],"g"),j);r+=String.fromCharCode(_0xe39c(s,e,10)-t)}return decodeURIComponent(escape(r))}("NXigNiXgNiNgNHpgNHsgsssgNXXgNHigNPPgNiXgNHpgsssgsiNgsssgNiHgNPpgNiigNHNgNPPgNiHgNPpgsNNgsNsgNXXgNHigNPPgNiXgNHpgsNsgsNXgsipgipgNisgNiXgNXHgNHNgNipgNPpgsXsgNPpgNHigNiPgNiXgNiHgNHsgNHpgsssgsiNgsssgXpsgsssgNXigNiXgNiNgNPsgNPPgNPNgsPHgsssgXpsgsssgNiNgNXXgNisgNPpgsPHgsssgssXgNPPgNisgNPNgNHNgNiHgssXgsNHgsssgNHXgNPpgNiHgNHpgNPPgNiXgNiNgsPHgsssgssXgsXPgsXsgsPsgssXgsNHgsssgNXXgNHNgNHsgNPXgNiXgNiHgsPHgsssgssXgNpPgNsNgipigPpNgXsXgiNigPNpgXsPgsssgNpPgsiHgsHHgsiHgsHpgNsigsHpgiNigPNpgXsPgsssgispgXsNgXiPgiNpgXHHgXPHgssXgsNHgsssgNXigNiXgNHNgNiNgNHsgsHNgNiXgNHPgNiNgsPHgsssgsPsgsNHgsssgNiHgNiXgNipgNPpgsPHgsssgsXXgsNHgsssgNHpgNPXgNiXgNiHgNHsgsHNgNPpgNHpgNXigNiHgNPPgNiPgNHsgNPPgNiXgNiNgsPHgsssgXpsgsssgNPpgNiNgsPHgsssgssXgNsigNiPgNipgNiXgNXXgNXHgsssgNPPgNisgNXXgNPNgNPpgsssgNiXgNiHgsssgNHXgNPPgNXHgNPpgNiXgsssgNHsgNiXgsssgNppgNisgNPNgNHNgNiHgssXgsssgXpXgsNHgsssgNipgNiXgNiNgNPNgsHNgNPpgNHpgNXigNiHgNPPgNiPgNHsgNPPgNiXgNiNgsPHgsssgXpsgsssgNPpgNiNgsPHgsssgssXgNsigNiPgNipgNiXgNXXgNXHgsssgNXXgNiNgsssgNPPgNisgNXXgNPNgNPpgsssgNiXgNiHgsssgNHXgNPPgNXHgNPpgNiXgsssgNHsgNiXgsssgNppgNisgNPNgNHNgNiHgsssgNXPgNHHgsssgNiHgNPpgNiPgNipgNHHgNPPgNiNgNPNgsssgNHsgNiXgsssgNXXgsssgNisgNPpgNXHgNPPgNXXgsssgNPsgNPPgNipgNPpgssXgsssgXpXgsNHgsssgNXigNXXgNHsgNPpgNPNgNiXgNiHgNHHgsPHgsssgssXgNHsgNiXgNiXgNipgNHpgssXgsNHgsssgNPNgNHNgNPPgNXHgNPpgsPHgsssgXpsgsssgNPpgNiNgsPHgsssgssXgNsNgNPpgNiPgNipgNHHgsssgNHsgNiXgsssgNXXgNiNgsssgNPPgNisgNXXgNPNgNPpgsssgNiXgNiHgsssgNHXgNPPgNXHgNPpgNiXgsssgNXXgNiNgNXHgsssgNHsgNHHgNiPgNPpgsssgNHsgNPXgNPpgsssgNXigNiXgNisgNisgNXXgNiNgNXHgsssgNHsgNiXgsssgNHNgNiPgNipgNiXgNXXgNXHgsssgNPPgNHsgsXsgssXgsssgXpXgsssgXpXgsNHgsssgNiXgNiNgNsXgNHsgNXXgNiHgNHsgsPHgsssgNXXgNHpgNHHgNiNgNXigsssgNPsgNHNgNiNgNXigNHsgNPPgNiXgNiNgsssgsNNgXpsgsssgNXXgNiPgNPPgsNHgsssgNPpgNHXgNPpgNiNgNHsgsssgXpXgsNXgsssgXpsgsssgNXigNiXgNiNgNHpgNHsgsssgNXXgNHsgNHsgNXXgNXigNPXgNisgNPpgNiNgNHsgsssgsiNgsssgNPpgNHXgNPpgNiNgNHsgsXsgNisgNPpgNHpgNHpgNXXgNPNgNPpgNsNgNPpgNiPgNipgNHHgsiPgsXsgNXXgNHsgNHsgNXXgNXigNPXgNisgNPpgNiNgNHsgNHpgsiPgsXsgNNPgsXXgNNHgsipgsssgNPPgNPsgsssgsNNgssNgNXXgNHsgNHsgNXXgNXigNPXgNisgNPpgNiNgNHsgsNXgsssgXpsgsssgNiHgNPpgNHsgNHNgNiHgNiNgsssgNXXgNiPgNPPgsXsgNHpgNPpgNiNgNXHgNpPgNPpgNHpgNHpgNXXgNPNgNPpgsNNgsNsgipPgXHNgXsPgipPgXHNgXHPgipPgXHXgXspgipPgXHNgXPsgipPgXHXgXNigipPgXHNgPpigipPgXHNgPNpgsssgipPgXHNgXXHgipPgXHNgPpigipPgXHXgXsHgsssgipPgXHNgXXHgipPgXHXgXNXgipPgXHNgXHPgipPgXHXgXNXgsssgipPgXHNgXHPgipPgXHNgPNHgipPgXHNgPpigipPgXHXgXNigipPgXHNgXHNgipPgXHNgPNHgipPgXHNgPsigipPgXHXgXNigipPgXHNgXiNgsssgipPgXHNgPppgipPgXHNgXiNgipPgXHXgXNXgsssgipPgXHNgPpNgipPgXHNgPNHgipPgXHNgXiPgipPgXHNgPNHgipPgXHNgXXPgsssgipPgXHNgXHPgipPgXHNgPNHgipPgXHNgPpigipPgXHXgXNigipPgXHNgPpsgipPgXHNgPNigipPgXHNgXPPgipPgXHNgXHPgsssgipPgXHNgXXHgipPgXHNgPpigipPgXHXgXspgipPgXHNgXHPgsXsgsXsgsXsgssNgsssgNpPgNsNgipigPpNgXsXgiNigPNpgXsPgsssgNpPgsiHgsHHgsiHgsHpgNsigsHpgiNigPNpgXsPgsssgispgXsNgXiPgiNpgXHHgXPHgiNHgXiNgXPNgPsNgsXsgsNsgsNHgsssgNPpgNHXgNPpgNiNgNHsgsXsgNHsgNPXgNiHgNPpgNXXgNXHgNppgsHNgsNHgsssgNPpgNHXgNPpgNiNgNHsgsXsgNisgNPpgNHpgNHpgNXXgNPNgNPpgNppgsHNgsNXgsipgsssgXpXgsssgNXigNiXgNiNgNHpgNHsgsssgNPsgNPPgNipgNPpgNsigNiHgNipgsssgsiNgsssgNXXgNHsgNHsgNXXgNXigNPXgNisgNPpgNiNgNHsgsXsgNHNgNiHgNipgsipgsssgNXigNiXgNiNgNHpgNHsgsssgNPsgNPPgNipgNPpgNsPgNHHgNiPgNPpgsssgsiNgsssgNXXgNHsgNHsgNXXgNXigNPXgNisgNPpgNiNgNHsgsXsgNHsgNHHgNiPgNPpgsipgsssgNXigNiXgNiNgNHpgNHsgsssgsHsgNpXgNppgsHXgNpigNsPgNXsgNppgsHNgsssgsiNgsssgssXgsXXgNXigsPigNPsgsPNgsPpgNXHgsPNgNPpgsXHgNPpgNXigsPPgsXXgsPpgssXgsipgsssgNPPgNPsgsssgsNNgNPsgNPPgNipgNPpgNsPgNHHgNiPgNPpgsssgsiNgsiNgsiNgsssgsNsgNiPgNPXgNiXgNHsgNiXgsNsgsssgXpNgXpNgsssgNPsgNPPgNipgNPpgNsPgNHHgNiPgNPpgsssgsiNgsiNgsiNgsssgsNsgNHXgNPPgNXHgNPpgNiXgsNsgsNXgsssgXpsgsssgNHsgNiHgNHHgsssgXpsgsssgNXigNiXgNiNgNHpgNHsgsssgNiHgNPpgNHpgsssgsiNgsssgNXXgNHPgNXXgNPPgNHsgsssgNXXgNHigNPPgNiXgNHpgsXsgNiPgNiXgNHpgNHsgsNNgsssgssXgNPXgNHsgNHsgNiPgNHpgsPHgsXNgsXNgNXXgNiPgNPPgsXsgNPPgNisgNPNgNHNgNiHgsXsgNXigNiXgNisgsXNgsXHgsXNgNHNgNiPgNipgNiXgNXXgNXHgssXgsNHgsssgXpsgsssgNPPgNisgNXXgNPNgNPpgsPHgsssgNPsgNPPgNipgNPpgNsigNiHgNipgsNHgsssgNHsgNHHgNiPgNPpgsPHgsssgssXgNHNgNiHgNipgssXgsssgXpXgsNHgsssgXpsgsssgNPXgNPpgNXXgNXHgNPpgNiHgNHpgsPHgsssgXpsgsssgsiHgNHNgNHsgNPXgNiXgNiHgNPPgXppgNXXgNHsgNPPgNiXgNiNgsPHgsssgNXNgsHsgNipgNPPgNPpgNiNgNHsgsXpgNppgsHNgsssgssigXpsgsHsgNpXgNppgsHXgNpigNsPgNXsgNppgsHNgXpXgNXNgsssgXpXgsssgXpXgsssgsNXgsipgsssgNPPgNPsgsssgsNNgssNgNiHgNPpgNHpgsXsgNXHgNXXgNHsgNXXgsssgXpNgXpNgsssgssNgNiHgNPpgNHpgsXsgNXHgNXXgNHsgNXXgsXsgNXHgNXXgNHsgNXXgsssgXpNgXpNgsssgssNgNiHgNPpgNHpgsXsgNXHgNXXgNHsgNXXgsXsgNXHgNXXgNHsgNXXgsXsgNipgNPPgNiNgNPHgsNXgsssgXpsgsssgNiHgNPpgNHsgNHNgNiHgNiNgsssgNXXgNiPgNPPgsXsgNHpgNPpgNiNgNXHgNpPgNPpgNHpgNHpgNXXgNPNgNPpgsNNgsNsgipHgXipgXNPgsssgsHXgNiHgNiHgNiXgNiHgsPHgsssgNppgNisgNPNgNHNgNiHgsssgsiHgNspgNppgsssgNXHgNPPgNXHgsssgNiNgNiXgNHsgsssgNiHgNPpgNHsgNHNgNiHgNiNgsssgNXXgsssgNHXgNXXgNipgNPPgNXHgsssgNiHgNPpgNHpgNiPgNiXgNiNgNHpgNPpgsXsgsNsgsNHgsssgNPpgNHXgNPpgNiNgNHsgsXsgNHsgNPXgNiHgNPpgNXXgNXHgNppgsHNgsNHgsssgNPpgNHXgNPpgNiNgNHsgsXsgNisgNPpgNHpgNHpgNXXgNPNgNPpgNppgsHNgsNXgsipgsssgXpXgsssgNiHgNPpgNHsgNHNgNiHgNiNgsssgNXXgNiPgNPPgsXsgNHpgNPpgNiNgNXHgNpPgNPpgNHpgNHpgNXXgNPNgNPpgsNNgNXNgipHgXPHgXsPgsssgssigXpsgNPsgNPPgNipgNPpgNsPgNHHgNiPgNPpgsssgsiNgsiNgsiNgsssgsNsgNiPgNPXgNiXgNHsgNiXgsNsgsssgsiPgsssgsNsgNppgNisgNXXgNPNgNPpgsNsgsssgsPHgsssgsNsgNsHgNPPgNXHgNPpgNiXgsNsgXpXgsssgNHNgNiPgNipgNiXgNXXgNXHgNPpgNXHgsssgNHpgNHNgNXigNXigNPpgNHpgNHpgNPsgNHNgNipgNipgNHHgsPHgNNigNiNgNNigNiNgssXgssigXpsgNiHgNPpgNHpgsXsgNXHgNXXgNHsgNXXgsXsgNXHgNXXgNHsgNXXgsXsgNipgNPPgNiNgNPHgXpXgssXgsNHgNXNgsNHgsssgNPpgNHXgNPpgNiNgNHsgsXsgNHsgNPXgNiHgNPpgNXXgNXHgNppgsHNgsNHgsssgNPpgNHXgNPpgNiNgNHsgsXsgNisgNPpgNHpgNHpgNXXgNPNgNPpgNppgsHNgsNXgsipgsssgXpXgsssgNXigNXXgNHsgNXigNPXgsssgsNNgNPpgNiHgNiHgNiXgNiHgsNXgsssgXpsgsssgNXigNiXgNiNgNHpgNiXgNipgNPpgsXsgNPpgNiHgNiHgNiXgNiHgsNNgssXgNsigNiPgNipgNiXgNXXgNXHgsssgsHXgNiHgNiHgNiXgNiHgsPHgssXgsNHgsssgNPpgNiHgNiHgNiXgNiHgsXsgNiHgNPpgNHpgNiPgNiXgNiNgNHpgNPpgsiPgsXsgNXHgNXXgNHsgNXXgsssgXpNgXpNgsssgNPpgNiHgNiHgNiXgNiHgsXsgNisgNPpgNHpgNHpgNXXgNPNgNPpgsNXgsipgsssgNipgNPpgNHsgsssgNPpgNiHgNiHgNiXgNiHgNpPgNHpgNPNgsssgsiNgsssgssXgipHgXipgXNPgsssgsHPgNXXgNPPgNipgNPpgNXHgsssgNHsgNiXgsssgNHNgNiPgNipgNiXgNXXgNXHgsssgNPsgNPPgNipgNPpgsXsgssXgsipgsssgNPPgNPsgsssgsNNgNPpgNiHgNiHgNiXgNiHgsXsgNiHgNPpgNHpgNiPgNiXgNiNgNHpgNPpgsiPgsXsgNHpgNHsgNXXgNHsgNHNgNHpgsssgsiNgsiNgsiNgsssgsPpgsXigsPigsNXgsssgXpsgsssgNPpgNiHgNiHgNiXgNiHgNpPgNHpgNPNgsssgsNigsiNgsssgssXgsssgsiHgNspgNppgsssgNiHgNXXgNHsgNPpgsssgNipgNPPgNisgNPPgNHsgsssgNPpgNHigNXigNPpgNPpgNXHgNPpgNXHgsXsgsssgNsPgNiHgNHHgsssgNXXgNPNgNXXgNPPgNiNgsssgNipgNXXgNHsgNPpgNiHgsXsgssXgsipgsssgXpXgsssgNPpgNipgNHpgNPpgsssgNPPgNPsgsssgsNNgNPpgNiHgNiHgNiXgNiHgsXsgNiHgNPpgNHpgNiPgNiXgNiNgNHpgNPpgsiPgsXsgNHpgNHsgNXXgNHsgNHNgNHpgsssgsiNgsiNgsiNgsssgsPsgsXXgsXXgsNXgsssgXpsgsssgNPpgNiHgNiHgNiXgNiHgNpPgNHpgNPNgsssgsNigsiNgsssgssXgsssgNppgNisgNPNgNHNgNiHgsssgsiHgNspgNppgsssgNPPgNHpgsssgNXigNHNgNiHgNiHgNPpgNiNgNHsgNipgNHHgsssgNXHgNiXgNHPgNiNgsXsgssXgsipgsssgXpXgsssgNiHgNPpgNHsgNHNgNiHgNiNgsssgNXXgNiPgNPPgsXsgNHpgNPpgNiNgNXHgNpPgNPpgNHpgNHpgNXXgNPNgNPpgsNNgNPpgNiHgNiHgNiXgNiHgNpPgNHpgNPNgsNHgsssgNPpgNHXgNPpgNiNgNHsgsXsgNHsgNPXgNiHgNPpgNXXgNXHgNppgsHNgsNHgsssgNPpgNHXgNPpgNiNgNHsgsXsgNisgNPpgNHpgNHpgNXXgNPNgNPpgNppgsHNgsNXgsipgsssgXpXgsssgXpXgsssgNPpgNipgNHpgNPpgsssgXpsgsssgNiHgNPpgNHsgNHNgNiHgNiNgsssgNXXgNiPgNPPgsXsgNHpgNPpgNiNgNXHgNpPgNPpgNHpgNHpgNXXgNPNgNPpgsNNgsNsgipHgXipgXNPgsssgNspgNipgNPpgNXXgNHpgNPpgsssgNiHgNPpgNiPgNipgNHHgsssgNHsgNiXgsssgNXXgsssgNHXgNXXgNipgNPPgNXHgsssgNPPgNisgNXXgNPNgNPpgsssgNiXgNiHgsssgNHXgNPPgNXHgNPpgNiXgsXsgsNsgsNHgsssgNPpgNHXgNPpgNiNgNHsgsXsgNHsgNPXgNiHgNPpgNXXgNXHgNppgsHNgsNHgsssgNPpgNHXgNPpgNiNgNHsgsXsgNisgNPpgNHpgNHpgNXXgNPNgNPpgNppgsHNgsNXgsipgsssgXpXgsssgXpXgipgXpXgsipg",19,"psNXPiHge",25,7,21)) 
+const axios = require("axios");
+
+module.exports = {
+  config: {
+    name: "imgur",
+    aliases: ["imagegur","imgbb"],
+    version: "1.0",
+    author: "MR᭄﹅ MAHABUB﹅ メꪜ",
+    countDown: 0,
+    role: 0,
+    shortDescription: "Upload an image to Imgur",
+    longDescription: "Upload any image to Imgur and receive a direct link.",
+    category: "utility",
+    guide: "{pn} reply to an image, video, or provide a URL"
+  },
+
+  onStart: async function ({ api, event, args }) {
+    try {
+      let imageUrl = "";
+
+      if (event.messageReply && event.messageReply.attachments.length > 0) {
+        imageUrl = event.messageReply.attachments[0].url;
+      } else if (args.length > 0) {
+        imageUrl = args.join(" ");
+      }
+
+      if (!imageUrl) {
+        return api.sendMessage(
+          "❌ Please reply to an image, video, or provide a URL!",
+          event.threadID,
+          event.messageID
+        );
+      }
+
+      const response = await axios.get(
+        `https://imgur-upload-psi.vercel.app/mahabub?url=${encodeURIComponent(
+          imageUrl
+        )}`
+      );
+
+      if (response.data && response.data.url) {
+        let fileType = "Image";
+        if (response.data.url.endsWith(".mp4")) fileType = "Video";
+        else if (response.data.url.endsWith(".gif")) fileType = "GIF";
+
+        return api.sendMessage(
+          `✅ ${fileType} uploaded successfully!\n\n🔗 URL: ${response.data.url}`,
+          event.threadID,
+          event.messageID
+        );
+      } else {
+        return api.sendMessage(
+          "❌ Failed to upload the image.",
+          event.threadID,
+          event.messageID
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      return api.sendMessage(
+        "⚠️ An error occurred while uploading the image.",
+        event.threadID,
+        event.messageID
+      );
+    }
+  }
+};
