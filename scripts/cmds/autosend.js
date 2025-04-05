@@ -5,7 +5,7 @@ module.exports.config = {
     name: "autosend",
     version: "1.6",
     role: 0,
-    credits: "MAHABUB RAHMAN",
+    author: "MAHABUB RAHMAN",
     description: "Automatically sends video from API at specified times .! do not change author ❌",
     category: "Media",
     usages: "No manual trigger needed",
