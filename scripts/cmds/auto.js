@@ -20,57 +20,62 @@ let autoLinkStates = loadAutoLinkStates();
 module.exports = {
   config: {
     name: 'autolink',
-    version: '3.5',
+    version: '5.0',
     author: 'MR᭄﹅ MAHABUB﹅ メꪜ',
     countDown: 5,
     role: 0,
-    shortDescription: 'Auto-download and send videos with title',
+    shortDescription: 'Always active auto video download for any URL',
     category: 'media',
   },
 
   onStart: async function ({ api, event }) {
-    
+    const threadID = event.threadID;
+    autoLinkStates[threadID] = true; // Always ON
+    saveAutoLinkStates(autoLinkStates);
+    return api.sendMessage("✅ AutoLink is now always ON and works for any URL!", threadID);
   },
 
   onChat: async function ({ api, event }) {
     const threadID = event.threadID;
     const message = event.body;
 
+    if (!autoLinkStates[threadID]) return;  // Should always be true now
+
     const linkMatch = message.match(/(https?:\/\/[^\s]+)/);
     if (!linkMatch) return;
 
     const url = linkMatch[0];
-
     api.setMessageReaction("⏳", event.messageID, () => {}, true);
 
     try {
-      const res = await axios.get(`https://nayan-video-downloader.vercel.app/alldown?url=${encodeURIComponent(url)}`);
-      if (!res.data.data || (!res.data.data.high && !res.data.data.low)) {
-        return api.sendMessage("", event.threadID, event.messageID);
+      // Fetch video data from the provided URL
+      const response = await axios.get(`https://nayan-video-downloader.vercel.app/alldown?url=${encodeURIComponent(url)}`);
+      const { title, high, low } = response.data.data;
+
+      if (!high && !low) {
+        api.setMessageReaction("😞", event.messageID, () => {}, true); // React with 😞 if no video found
+        return api.sendMessage("❌ No video found at this URL.", threadID, event.messageID);
       }
 
-      const { title, high, low } = res.data.data;
+      const videoUrl = high || low;
 
-      const msg = ` ╭──────────────────◊\n\n\n《TITLE》: *${title}* \n\n\n╰──────────────────◊`;
+      // Upload video to Imgur
+      const imgurRes = await axios.get(`https://imgur-upload-psi.vercel.app/mahabub?url=${encodeURIComponent(videoUrl)}`);
+      const imgurLink = imgurRes.data.url || "N/A";
 
-      const videoUrl = high || low; 
-
+      // Download video and send it back
       request(videoUrl).pipe(fs.createWriteStream("video.mp4")).on("close", () => {
-        api.sendMessage(
-          {
-            body: msg,
-            attachment: fs.createReadStream("video.mp4")
-          },
-          event.threadID,
-          () => {
-            fs.unlinkSync("video.mp4"); 
-          }
-        );
+        api.setMessageReaction("✅", event.messageID, () => {}, true); // React with ✅ when video download is successful
+        api.sendMessage({
+          body: `╭──────────────────◊\n\n\n《TITLE》: ${title || "No Title"}\n\n🌐 Imgur Link: ${imgurLink}\n\n\n╰──────────────────◊`,
+          attachment: fs.createReadStream("video.mp4")
+        }, threadID, () => fs.unlinkSync("video.mp4"));
       });
 
     } catch (err) {
-      console.error("Error fetching video:", err);
-      api.sendMessage("❌ Error while fetching video. Please try again later.", event.threadID, event.messageID);
+      console.error("Download Error:", err);
+      api.setMessageReaction("😞", event.messageID, () => {}, true); // React with 😞 on error
+      api.sendMessage("❌ Something went wrong. Please try again later.", threadID, event.messageID);
     }
   }
 };
