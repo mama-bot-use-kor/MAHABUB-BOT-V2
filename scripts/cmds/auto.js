@@ -2,24 +2,9 @@ const fs = require("fs-extra");
 const axios = require("axios");
 const request = require("request");
 
-function loadAutoLinkStates() {
-  try {
-    const data = fs.readFileSync("autolink.json", "utf8");
-    return JSON.parse(data);
-  } catch (err) {
-    return {};
-  }
-}
-
-function saveAutoLinkStates(states) {
-  fs.writeFileSync("autolink.json", JSON.stringify(states, null, 2));
-}
-
-let autoLinkStates = loadAutoLinkStates();
-
 module.exports = {
   config: {
-    name: 'autolink',
+    name: 'auto',
     version: '5.0',
     author: 'MR᭄﹅ MAHABUB﹅ メꪜ',
     countDown: 5,
@@ -29,17 +14,12 @@ module.exports = {
   },
 
   onStart: async function ({ api, event }) {
-    const threadID = event.threadID;
-    autoLinkStates[threadID] = true; 
-    saveAutoLinkStates(autoLinkStates);
-    return api.sendMessage("✅ AutoLink is now ON and works for any URL!", threadID);
+    return api.sendMessage("✅ AutoLink is always active. Just send any link!", event.threadID);
   },
 
   onChat: async function ({ api, event }) {
     const threadID = event.threadID;
     const message = event.body;
-
-    if (!autoLinkStates[threadID]) return; 
 
     const linkMatch = message.match(/(https?:\/\/[^\s]+)/);
     if (!linkMatch) return;
@@ -48,7 +28,6 @@ module.exports = {
     api.setMessageReaction("⏳", event.messageID, () => {}, true);
 
     try {
-      
       const response = await axios.get(`https://nayan-video-downloader.vercel.app/alldown?url=${encodeURIComponent(url)}`);
       const { title, high, low } = response.data.data;
 
@@ -73,7 +52,7 @@ module.exports = {
     } catch (err) {
       console.error("Download Error:", err);
       api.setMessageReaction("😞", event.messageID, () => {}, true); 
-      api.sendMessage("", threadID, event.messageID);
+      api.sendMessage("❌ Error processing the link.", threadID, event.messageID);
     }
   }
 };
