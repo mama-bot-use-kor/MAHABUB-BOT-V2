@@ -1,4 +1,6 @@
 const axios = require("axios");
+const fs = require("fs");
+const utils = global.utils;
 
 module.exports = {
     config: {
@@ -19,13 +21,12 @@ module.exports = {
             confirmThisThread: "Please react to this message to confirm changing the prefix in your chat",
             successGlobal: "Changed system bot prefix to: %1",
             successThisThread: "Changed prefix in your chat to: %1",
-            myPrefix: "\n\n‣ 𝐆𝐥𝐨𝐛𝐚𝐥 𝐩𝐫𝐞𝐟𝐢𝐱:%1 \n\n‣ 𝐘𝐨𝐮𝐫 𝐠𝐫𝐨𝐮𝐩 𝐩𝐫𝐞𝐟𝐢𝐱: %2\n\n‣ 𝐀𝐝𝐦𝐢𝐧 \n\n‣ MR᭄﹅ MAHABUB﹅ メꪜ\n\n‣ 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 ⓕ\n‣https://facebook.com/www.xnxx.com140\n\n"
+            myPrefix: "\n\n‣ 𝐆𝐥𝐨𝐛𝐚𝐥 𝐩𝐫𝐞𝐟𝐢𝐱: %1 \n\n‣ 𝐘𝐨𝐮𝐫 𝐠𝐫𝐨𝐮𝐩 𝐩𝐫𝐞𝐟𝐢𝐱: %2\n\n‣ 𝐀𝐝𝐦𝐢𝐧 \n\n‣ MR᭄﹅ MAHABUB﹅ メꪜ\n\n‣ 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 ⓕ\n‣https://facebook.com/www.xnxx.com140\n\n"
         }
     },
 
     onStart: async function ({ message, role, args, commandName, event, threadsData, getLang }) {
-        
-        if (!args[0]) return message.SyntaxError();
+        if (!args[0]) return message.reply("Please provide a new prefix or use 'reset'.");
 
         if (args[0] === "reset") {
             await threadsData.set(event.threadID, null, "data.prefix");
@@ -33,6 +34,9 @@ module.exports = {
         }
 
         const newPrefix = args[0];
+        if (newPrefix.length > 5 || newPrefix.length === 0)
+            return message.reply("Prefix should be between 1 to 5 characters.");
+
         const formSet = {
             commandName,
             author: event.senderID,
@@ -49,24 +53,26 @@ module.exports = {
         return message.reply(args[1] === "-g" ? getLang("confirmGlobal") : getLang("confirmThisThread"), (err, info) => {
             formSet.messageID = info.messageID;
             global.GoatBot.onReaction.set(info.messageID, formSet);
+
+            // Optional: Clean up after 60 seconds
+            setTimeout(() => {
+                global.GoatBot.onReaction.delete(info.messageID);
+            }, 60000);
         });
     },
 
     onChat: async function ({ event, message, getLang }) {  
         if (event.body && event.body.toLowerCase() === "prefix") {  
             try {
-                
-                const response = await axios.get('https://mahabub-video-api-we90.onrender.com/mahabub');
-                const videoUrl = response.data.data;  
+                const response = await axios.get('https://mahabub-apis.vercel.app/prefix');
+                const videoUrl = response.data.data;
 
                 if (videoUrl) {
-                    
                     return message.reply({
                         body: getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID)),
                         attachment: await global.utils.getStreamFromURL(videoUrl)
                     });
                 } else {
-                    // If no video link is available
                     return message.reply("No video available at the moment.");
                 }
 
@@ -80,6 +86,7 @@ module.exports = {
     onReaction: async function ({ message, threadsData, event, Reaction, getLang }) {
         const { author, newPrefix, setGlobal } = Reaction;
         if (event.userID !== author) return;
+
         if (setGlobal) {
             global.GoatBot.config.prefix = newPrefix;
             fs.writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
