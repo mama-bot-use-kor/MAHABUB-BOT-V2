@@ -4,34 +4,24 @@ module.exports = {
 	config: {
 		name: "drive",
 		version: "1.0.2",
-		author: "IMRAN_x_MAHABUB",
+		author: "IMRAN",
 		countDown: 5,
 		role: 0,
 		description: {
-			vi: "Tải video và thêm vào drive",
-			en: "Upload a video and add it to an drive"
+			en: "Upload a video and add it to Google Drive"
 		},
-		category: "user",
+		category: "utility",
 		guide: {
-			vi: "   {pn} <link>: thêm video từ liên kết vào drive"
-				+ "\n   Phản hồi tin nhắn có media để thêm video",
-			en: "   {pn} <link>: add video from link to drive"
-				+ "\n   Reply to a message with media to add video"
+			en: "   {pn} <link>: Add video from link to Google Drive\n   Reply to a message with media to upload"
 		}
 	},
 
 	langs: {
-		vi: {
-			missingInput: "Vui lòng cung cấp liên kết hợp lệ hoặc phản hồi tin nhắn có chứa media.",
-			uploadSuccess: "✅ | {title}\n\n🔰\n🔥 | URL: {url}\n👻 ID: {id}",
-			albumFail: "Không thể lấy dữ liệu album.",
-			error: "Không thể xử lý media.\nLỗi: {error}"
-		},
 		en: {
-			missingInput: "Please provide a valid URL or reply to a message with media.",
-			uploadSuccess: "✅ TITTLE: {title}\n\n🔰\n🔥 | URL: {url}\n👻 ID: {id}",
-			albumFail: "Failed to retrieve album data.",
-			error: "Failed to convert media.\nError: {error}"
+			missingInput: "⚠️ Please provide a valid URL or reply to a message with media.",
+			uploadSuccess: "🗂️ Successfully Uploaded to Google Drive!\n\n🔗 Direct URL: {url}\n🆔 File ID: {id}",
+			albumFail: "❌ Failed to retrieve file information.",
+			error: "⚠️ An error occurred during upload.\nError: {error}"
 		}
 	},
 
@@ -42,26 +32,22 @@ module.exports = {
 			return message.reply(getLang("missingInput"));
 
 		try {
-			// Upload using your updated API
-			const res = await axios.get(`https://glowing-octo-computing-machine-seven.vercel.app/api/upload?url=${encodeURIComponent(inputUrl)}`);
-			const { directLink, fileId, name } = res.data;
-			const title = args.join(" ") || name || "Uploaded Media";
+			const res = await axios.get(
+				`https://glowing-octo-computing-machine-seven.vercel.app/api/upload?url=${encodeURIComponent(inputUrl)}`
+			);
+			
+			const { directLink, fileId } = res.data;
 
-			// Album API
-			const svRes = await axios.get(`http://de3.spaceify.eu:25335/album?title=${encodeURIComponent(title)}&url=${encodeURIComponent(directLink)}`);
-			const data = svRes.data;
-
-			if (data && data.data?.title) {
+			if (directLink && fileId) {
 				const successMessage = getLang("uploadSuccess")
-					.replace("{title}", data.data.title)
 					.replace("{url}", directLink)
 					.replace("{id}", fileId);
-				message.reply(successMessage);
-			} else {
-				message.reply(getLang("albumFail"));
+				return message.reply(successMessage);
 			}
+
+			message.reply(getLang("albumFail"));
 		} catch (error) {
-			console.error("Upload/Add Error:", error?.response?.data || error.message);
+			console.error("Upload Error:", error);
 			message.reply(getLang("error").replace("{error}", error.message));
 		}
 	}
