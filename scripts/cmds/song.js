@@ -19,6 +19,25 @@ function deleteAfterTimeout(filePath, timeout = 15000) {
   }, timeout);
 }
 
+async function getAPIUrl() {
+  try {
+    console.log("🔄 Fetching API URL from JSON...");
+    const response = await axios.get('https://raw.githubusercontent.com/MR-MAHABUB-004/MAHABUB-BOT-STORAGE/refs/heads/main/APIURL.json');
+    console.log("✅ Successfully fetched API URL JSON:", response.data); // Debug log
+
+    // Ensure the response contains the expected 'YouTube' field
+    if (response.data && response.data.YouTube) {
+      return response.data.YouTube;
+    } else {
+      console.error("❌ YouTube field not found in the JSON.");
+      throw new Error("YouTube field not found in the JSON.");
+    }
+  } catch (error) {
+    console.error("❌ Failed to fetch API URL:", error.message);
+    throw new Error("Failed to load API URL.");
+  }
+}
+
 module.exports = {
   config: {
     name: "song",
@@ -32,7 +51,7 @@ module.exports = {
     category: "user",
     guide: "{p}{n}song",
   },
-  onStart: async function ({ api, event, args }) { 
+  onStart: async function ({ api, event, args }) {
     if (args.length === 0) {
       return api.sendMessage("⚠️ Please provide a song name to search.", event.threadID);
     }
@@ -62,12 +81,18 @@ module.exports = {
       const safeTitle = topResult.title.replace(/[^a-zA-Z0-9]/g, "_");
       const downloadPath = path.join(downloadDir, `${safeTitle}.mp3`);
 
-      
-      const apiUrl = `https://mahabub-music-api-6m2t.onrender.com/download?url=${encodeURIComponent(videoUrl)}`;
+      // Fetch API URL from the external JSON file
+      const apiUrl = await getAPIUrl();
+      console.log("✅ Using API URL:", apiUrl); // Debug log
+      if (!apiUrl) {
+        throw new Error("No API URL found for YouTube.");
+      }
+
+      const downloadApiUrl = `${apiUrl}/download?url=${encodeURIComponent(videoUrl)}`;
       let fileDownloaded = false;
 
       try {
-        const downloadResponse = await axios.get(apiUrl);
+        const downloadResponse = await axios.get(downloadApiUrl);
         if (downloadResponse.data.file_url) {
           const downloadUrl = downloadResponse.data.file_url.replace("http:", "https:");
           const file = fs.createWriteStream(downloadPath);
@@ -90,7 +115,6 @@ module.exports = {
         console.error("❌ API failed, switching to ytdl-core:", apiError.message);
       }
 
-      
       if (!fileDownloaded) {
         console.log("⚠️ Using ytdl-core as a backup...");
         const file = fs.createWriteStream(downloadPath);
@@ -104,7 +128,6 @@ module.exports = {
 
       api.setMessageReaction("✅", event.messageID, () => {}, true);
 
-      
       await api.sendMessage(
         {
           attachment: fs.createReadStream(downloadPath),
@@ -114,7 +137,6 @@ module.exports = {
         event.messageID
       );
 
-      
       deleteAfterTimeout(downloadPath, 15000);
     } catch (error) {
       console.error(`❌ Error: ${error.message}`);
